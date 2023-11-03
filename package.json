@@ -1,7 +1,7 @@
 {
   "name": "personalWebsite", 
   "version": "0.1.0",
-  "homepage": "https://FBUesnel.github.io/newPersonalWebsite",
+  "homepage": "https://FBuesnel.github.io/newPersonalWebsite",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
