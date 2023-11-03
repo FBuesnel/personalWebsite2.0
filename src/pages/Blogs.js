@@ -2,7 +2,10 @@ import React from 'react';
 
 const Blogs = () => {
 	return (
-		<h1>Coming soon...</h1>
+		<div className="p-10">
+			<div className="experienceHeader"><b>Blogs</b></div>
+			<div className="text-xl pb-20 text-dark-grey">Check back later</div>
+		</div>
 	);
 };
 
