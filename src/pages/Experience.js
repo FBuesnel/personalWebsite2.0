@@ -1,6 +1,8 @@
 import React from 'react';
 import Footer from './Footer';
 import '../index.css';
+import joejuice from '../images/joejuice.png'
+import conventlogo from '../images/conventlogo.png'
 
 const Experience = () => {
 	return (
@@ -11,7 +13,7 @@ const Experience = () => {
 				<div class="rounded-lg shadow-md border-4 border-grey">
 					<div class="p-4">
 						<div class="flex items-center">
-							<img class="rounded-full mr-3" alt="Joe & The Juice" src="../joejuice.png" width="50" height="50"></img>
+							<img class="rounded-full mr-3" alt="Joe & The Juice" src={joejuice} width="50" height="50"></img>
 							<div class="text-center">
 								<h5 class="text-lg font-bold">Juicer</h5>
 								<p class="text-gray-600">Joe & The Juice (2023)</p>
@@ -29,7 +31,7 @@ const Experience = () => {
 				<div class="rounded-lg shadow-md border-4 border-grey">
 					<div class="p-4">
 						<div class="flex items-center">
-							<img class="rounded-full mr-3" alt="Convent & Stuart Hall" src="../conventlogo.png" width="50" height="50"></img>
+							<img class="rounded-full mr-3" alt="Convent & Stuart Hall" src={conventlogo} width="50" height="50"></img>
 							<div class="text-center">
 								<h5 class="text-lg font-bold">Technology Assistant</h5>
 								<p class="text-gray-600">Convent & Stuart Hall (2022)</p>
@@ -47,7 +49,7 @@ const Experience = () => {
 				<div class="rounded-lg shadow-md border-4 border-grey">
 					<div class="p-4">
 						<div class="flex items-center">
-							<img class="rounded-full mr-3" alt="Convent & Stuart Hall" src="../conventlogo.png" width="50" height="50"></img>
+							<img class="rounded-full mr-3" alt="Convent & Stuart Hall" src={conventlogo} width="50" height="50"></img>
 							<div class="text-center">
 								<h5 class="text-lg font-bold">Technology Intern</h5>
 								<p class="text-gray-600">Convent & Stuart Hall (2021)</p>
@@ -86,7 +88,7 @@ const Experience = () => {
 				<div class="rounded-lg shadow-md border-4 border-gray-300">
 					<div class="p-4">
 						<div class="flex items-center">
-							<img class="rounded-full mr-3" alt="Convent & Stuart Hall" src="../conventlogo.png" width="50" height="50"></img>
+							<img class="rounded-full mr-3" alt="Convent & Stuart Hall" src={conventlogo} width="50" height="50"></img>
 							<div class="text-center">
 								<h5 class="text-lg font-bold">Convent & Stuart Hall High School</h5>
 								<p class="text-gray-600">2019-2023</p>

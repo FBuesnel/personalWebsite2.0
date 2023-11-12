@@ -1,6 +1,10 @@
 import React from 'react';
 import '../index.css';
 import Footer from './Footer';
+import graphing from '../images/3DGraphing.jpg';
+import ibkeyword from '../images/IB-Keyword-Search.jpg'
+import sfwbookclub from '../images/SFWBookclub.jpg'
+import wordsearcher from '../images/wordSearcher.jpg'
 
 const Portfolio = () => {
 	return (
@@ -10,7 +14,7 @@ const Portfolio = () => {
 			<div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
 				<a href="https://github.com/FBuesnel/wordSearcher" class="group w-full">
 					<div class="flex relative h-full">
-						<img alt="project" class="absolute inset-0 w-full h-full object-cover object-center rounded group-hover:brightness-0" src="../SFWBookclub.jpg"></img>
+						<img alt="project" class="absolute inset-0 w-full h-full object-cover object-center rounded group-hover:brightness-0" src={sfwbookclub}></img>
 						<div class="px-8 py-10 relative z-1 w-full border-4 border-gray-800 bg-gray-900 opacity-0 rounded hover:opacity-100 hover:brightness-100">
 							<h2 class="tracking-widest text-sm title-font text-medium text-honey-400 mb-1 text-center">
 								WebApp
@@ -24,7 +28,7 @@ const Portfolio = () => {
 				</a>
 				<a href="https://github.com/FBuesnel/wordSearcher" class="group w-full">
 					<div class="flex relative h-full">
-						<img alt="project" class="absolute inset-0 w-full h-full object-cover object-center rounded group-hover:brightness-0" src="../3DGraphing.jpg"></img>
+						<img alt="project" class="absolute inset-0 w-full h-full object-cover object-center rounded group-hover:brightness-0" src={graphing}></img>
 						<div class="px-8 py-10 relative z-1 w-full border-4 border-gray-800 bg-gray-900 opacity-0 rounded hover:opacity-100 hover:brightness-100">
 							<h2 class="tracking-widest text-sm title-font text-medium text-honey-400 mb-1 text-center">
 								MatPlotLib
@@ -38,7 +42,7 @@ const Portfolio = () => {
 				</a>
 				<a href="https://github.com/FBuesnel/wordSearcher" class="group w-full">
 					<div class="flex relative h-full">
-						<img alt="project" class="absolute inset-0 w-full h-full object-cover object-center rounded group-hover:brightness-0" src="../wordSearcher.jpg"></img>
+						<img alt="project" class="absolute inset-0 w-full h-full object-cover object-center rounded group-hover:brightness-0" src={wordsearcher}></img>
 						<div class="px-8 py-10 relative z-1 w-full border-4 border-gray-800 bg-gray-900 opacity-0 rounded hover:opacity-100 hover:brightness-100">
 							<h2 class="tracking-widest text-sm title-font text-medium text-honey-400 mb-1 text-center">
 								Java
@@ -52,7 +56,7 @@ const Portfolio = () => {
 				</a>
 				<a href="https://github.com/FBuesnel/wordSearcher" class="group w-full">
 					<div class="flex relative h-full">
-						<img alt="project" class="absolute inset-0 w-full h-full object-cover object-center rounded group-hover:brightness-0" src="../IB-Keyword-Search.jpg"></img>
+						<img alt="project" class="absolute inset-0 w-full h-full object-cover object-center rounded group-hover:brightness-0" src={ibkeyword}></img>
 						<div class="px-8 py-10 relative z-1 w-full border-4 border-gray-800 bg-gray-900 opacity-0 rounded hover:opacity-100 hover:brightness-100">
 							<h2 class="tracking-widest text-sm title-font text-medium text-honey-400 mb-1 text-center">
 								Java
