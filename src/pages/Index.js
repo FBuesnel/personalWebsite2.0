@@ -1,6 +1,7 @@
 import React from 'react';
 import '../index.css';
 import Footer from './Footer';
+import profile from '../images/profilePicture.jpg';
 
 const Home = () => {
 	return (
@@ -12,7 +13,7 @@ const Home = () => {
 					</div>
 				</div>
 				<div class="row">
-					<img src="/profilePicture.jpg" alt="Me"></img>
+					<img src={profile} alt="Me"></img>
 					<p class="colored-text">Hey, I'm Fynn Buesnel. I'm currently a student at <b>Boston University</b> persuing a major in <b>Computer Science</b>. I love fashion, volunteering, teaching, and currently web development utilizing React. Check out my experiences and projects!</p>
 				</div>
 
