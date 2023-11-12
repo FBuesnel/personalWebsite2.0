@@ -1,6 +1,6 @@
 
 const sitemap = require('sitemap');
-const hostname = 'https://www.fynnbuesnel.me';
+const hostname = 'https://fynnbuesnel.me';
 
 const urls = [
   { url: '/', changefreq: 'monthly', priority: 1 },
@@ -8,7 +8,7 @@ const urls = [
   { url: '/portfolio', changefreq: 'monthly', priority: 0.8 },
   { url: '/blogs', changefreq: 'monthly', priority: 0.4 },
   { url: '/contact', changefreq: 'yearly', priority: 0.2 },
-  // Add additional pages here
+  // Additional pages here
 ];
 
 const sitemapInstance = sitemap.createSitemap({
