@@ -1,4 +1,3 @@
-
 const sitemap = require('sitemap');
 const hostname = 'https://fynnbuesnel.me';
 
