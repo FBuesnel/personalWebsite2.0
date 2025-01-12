@@ -12,5 +12,5 @@ export const posts = [
     title: 'Blog Post 2',
     content: post2,
   },
-  // Add more blogs here
+  // Add more posts here
 ];
