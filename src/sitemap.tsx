@@ -1,4 +1,4 @@
-const sitemap = require('sitemap');
+const sitemapModule = require('sitemap');
 const hostname = 'https://fynnbuesnel.me';
 
 const urls = [
@@ -10,7 +10,7 @@ const urls = [
   // Additional pages here
 ];
 
-const sitemapInstance = sitemap.createSitemap({
+const sitemapInstance = sitemapModule.createSitemap({
   hostname,
   urls,
 });

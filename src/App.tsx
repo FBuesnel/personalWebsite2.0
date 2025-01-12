@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Navbar from './components/Navbar/index.js';
+import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Routes, Route }
     from 'react-router-dom';
 import Index from './pages/Index';
@@ -14,7 +14,7 @@ function App() {
         <Router>
             <Navbar />
             <Routes>
-                <Route exact path='/' element={<Index />} />
+                <Route path='/' element={<Index />} />
                 <Route path='/Contact' element={<Contact />} />
                 <Route path='/Blogs' element={<Blogs />} />
                 <Route path='/Experience' element={<Experience />} />
