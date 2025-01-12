@@ -111,21 +111,11 @@ const Navbar = () => {
         <Bars onClick={toggleMenu} />
         <NavMenu isOpen={isOpen}>
           <CloseIcon onClick={toggleMenu} />
-          <NavLink to="/" onClick={toggleMenu}>
-            Home
-          </NavLink>
-          <NavLink to="/experience" onClick={toggleMenu}>
-            Experience
-          </NavLink>
-          <NavLink to="/portfolio" onClick={toggleMenu}>
-            Portfolio
-          </NavLink>
-          <NavLink to="/blogs" onClick={toggleMenu}>
-            Blogs
-          </NavLink>
-          <NavLink to="/contact" onClick={toggleMenu}>
-            Contact
-          </NavLink>
+          <NavLink to="/" onClick={toggleMenu}>Home</NavLink>
+          <NavLink to="/experience" onClick={toggleMenu}>Experience</NavLink>
+          <NavLink to="/portfolio" onClick={toggleMenu}>Portfolio</NavLink>
+          <NavLink to="/posts" onClick={toggleMenu}>Posts</NavLink>
+          <NavLink to="/contact" onClick={toggleMenu}>Contact</NavLink>
         </NavMenu>
       </Nav>
       <Overlay isOpen={isOpen} onClick={toggleMenu} />
