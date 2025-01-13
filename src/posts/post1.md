@@ -43,7 +43,6 @@ savant; his name is prestigiously placed in the Time’s 100 Most Influential Pe
 Century. Yet, he still feels unfulfilled, which is not a great emotion since he believes his
 whole life has basically passed him by. On an ordinary day with one of his young
 grandchildren, they ask “Where was your home? Was it anything like ours?” \
-
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;“It was nothing more than a small cabin built by father’s hands…Except one
 thing I can’t place my finger on.” He responds. \
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;“Did you ever go back?” \
@@ -53,7 +52,7 @@ thing I can’t place my finger on.” He responds. \
 story with more joy than he has felt in decades. The grandchild eventually slinks away,
 but Akshan just keeps going. Why did he never go back? Perhaps he was 82, perhaps his
 body ached just lying in bed, and perhaps his life was “over” in most people’s traditional
-sense, but he decided that he would make this journey at least once. \
+sense, but he decided that he would make this journey at least once. 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Akshan traveled from his country estate in Syracuse, took a private plane, and
 landed an hour outside of Arrowtown. Despite his family’s urging, he decided to drive
 himself in his father’s only remnant, a Chrysler Newport. About half a mile from the
@@ -62,7 +61,7 @@ child and his father to have lived in. A bit behind was a paradoxical forest wit
 dwarfed his old home. Akshan wept for the house, where he experiences his childhood
 beauty truly cut-off becoming the past, but he wept out of joy too for his garden, no
 Forest. All that remains of his father and his house are memories; the only thing that
-remains of his Garden is everything and more. \
+remains of his Garden is everything and more. 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; As he parks the car and walks behind the house, the Cedar trees look even more
 majestic, and his garden disorganized but beautiful just like he planted it. This was his
 legacy; this was his life. It just stood there, unknown for a few decades to him, but never
@@ -70,5 +69,4 @@ leaving. His business would eventually fail, his kids were already siphoning his
 into nothing, but this wondrous utopia remains. He disappears into the foliage. TheBirds of Paradise were so overgrown, the leaves so gargantuan, that he had force his way through small cracks in the vegetation. At the center remained the bench, with his name
 carved into it, and a date of a man so far detached from who he is now. Yet as Akshan sat
 slowly onto the bench, his little life became whole, and he felt the eternity of the world. \
-
-<em>Fynn Buesnel. Updated December 1st, 2023.</em>
+*Fynn Buesnel. Updated December 1st, 2023.*
