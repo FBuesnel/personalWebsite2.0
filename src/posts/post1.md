@@ -69,4 +69,6 @@ legacy; this was his life. It just stood there, unknown for a few decades to him
 leaving. His business would eventually fail, his kids were already siphoning his fortune
 into nothing, but this wondrous utopia remains. He disappears into the foliage. TheBirds of Paradise were so overgrown, the leaves so gargantuan, that he had force his way through small cracks in the vegetation. At the center remained the bench, with his name
 carved into it, and a date of a man so far detached from who he is now. Yet as Akshan sat
-slowly onto the bench, his little life became whole, and he felt the eternity of the world.
+slowly onto the bench, his little life became whole, and he felt the eternity of the world. \
+
+<em>Fynn Buesnel. Updated December 1st, 2023.</em>
