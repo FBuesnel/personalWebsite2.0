@@ -17,10 +17,10 @@ function App() {
             <Navbar />
             <Routes>
                 <Route path='/' element={<Index />} />
-                <Route path='/Contact' element={<Contact />} />
-                <Route path='/Posts' element={<Posts />} />
-                <Route path='/Experience' element={<Experience />} />
-                <Route path='/Portfolio' element={<Portfolio />} />
+                <Route path='/contact' element={<Contact />} />
+                <Route path='/posts' element={<Posts />} />
+                <Route path='/experience' element={<Experience />} />
+                <Route path='/portfolio' element={<Portfolio />} />
                 <Route path="/posts/:id" element={<Post />} />
             </Routes>
         </Router>
