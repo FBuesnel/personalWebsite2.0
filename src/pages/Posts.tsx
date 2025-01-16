@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { posts } from '../posts/posts';
 
+import { Container, Header, Description } from '../styles/GlobalStyles';
+
 const StyledUL = styled.ul`
   list-style-type: list;
   padding: 0;
@@ -20,11 +22,16 @@ const StyledLink = styled(Link)`
   cursor: pointer;
 `
 
+const StyledContainer = styled(Container)`
+  min-height: 80vh;
+  padding-right: 30%;
+`;
+
 const Posts: React.FC = () => {
   return (
-    <div className="container">
-      <div className="experienceHeader"><b>Posts</b></div>
-      <div className="text-xl pb-5 text-dark-grey">Here I post lots of different things. There includes stories, poetry, and my thoughts on various things I enjoy. If you have any feedback, feel free to send me a message.</div>
+    <StyledContainer>
+      <Header>Posts</Header>
+      <Description>Here I post lots of different things. This includes stories, poetry, and my thoughts on various things I enjoy. If you have any feedback, feel free to send me a message.</Description>
       <StyledUL>
         {posts.map(post => (
           <li key={post.id}>
@@ -32,7 +39,7 @@ const Posts: React.FC = () => {
           </li>
         ))}
       </StyledUL>
-    </div>
+    </StyledContainer>
   );
 };
 

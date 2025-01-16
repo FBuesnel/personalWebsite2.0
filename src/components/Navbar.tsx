@@ -6,7 +6,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
  
 const Nav = styled.nav`
 	background: #dad5d2;
-	padding: 20px 20px 0 0;
+	padding: 20px 20px 2rem 0;
 	text-align: center;
 	justify-content: space-between;
   position: relative;

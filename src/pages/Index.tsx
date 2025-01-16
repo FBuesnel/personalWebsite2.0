@@ -1,21 +1,14 @@
 import styled from 'styled-components';
-import Footer from './Footer';
 import profile from '../images/profilePicture.jpg';
-import { Container } from '../styles/GlobalStyles';
+import { Container, Header } from '../styles/GlobalStyles';
 
-const HeaderText = styled.div`
-  margin-top: 10%;
-  font-size: 30px;
+const StyledHeader = styled(Header)`
   color: #514c4a;
+  font-weight: 400;
 
   @media (max-width: 768px) {
-    font-size: 24px;
-    margin-top: 20%;
+    text-align: center;
   }
-`;
-
-const ColoredText = styled.span`
-  color: #514c4a;
 `;
 
 const Row = styled.div`
@@ -53,22 +46,27 @@ const Description = styled.p`
   }
 `;
 
+const StyledContainer = styled(Container)`
+  min-height: 80vh;
+  padding-right: 30%;
+  @media (max-width: 768px) {
+    padding-right: 10%;
+  }
+`;
+
 const Home = () => {
   return (
-    <div>
-      <Container>
-			<HeaderText>
-				Web Developer with a passion for <ColoredText>Computer Science</ColoredText> and <ColoredText>Literature</ColoredText>
-			</HeaderText>
-        <Row>
-          <ProfileImage src={profile} alt="Me" />
-          <Description>
-            Hey, I'm Fynn Buesnel. I'm currently a student at <b>Boston University</b> pursuing a major in <b>Computer Science</b>. I love fashion, volunteering, teaching, and currently web development utilizing React. Check out my experiences and projects!
-          </Description>
-        </Row>
-      </Container>
-      <Footer />
-    </div>
+    <StyledContainer>
+      <StyledHeader>
+        Web Developer with a passion for Computer Science and Literature
+      </StyledHeader>
+      <Row>
+        <ProfileImage src={profile} alt="Me" />
+        <Description>
+          Hey, I'm Fynn Buesnel. I'm currently a student at <b>Boston University</b> pursuing a BA in <b>Computer Science</b> and a BA in <b>Economics</b>. I love fashion, volunteering, teaching, and currently web development utilizing React. Check out my experiences and projects!
+        </Description>
+      </Row>
+    </StyledContainer>
   );
 };
 
