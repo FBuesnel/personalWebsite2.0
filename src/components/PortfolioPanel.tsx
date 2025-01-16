@@ -5,38 +5,37 @@ import styled from 'styled-components';
 const Panel = styled.div`
   position: relative;
   height: 100%;
+  &:hover img {
+    filter: brightness(0.25);
+  }
 `;
 
 const Image = styled.img`
   position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   border-radius: 10px;
-  transition: brightness 0.5s;
-  &:hover {
-    brightness: 0;
-  }
+  border: 4px solid #514c4a;
+  transition: filter 0.5s;
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ opacity: number }>`
   padding: 2rem;
   position: relative;
-  z-index: 1;
   width: 100%;
   height: 100%;
-  border: 4px solid #514c4a;
   background: #dad5d2;
-  opacity: 0;
+  border: 4px solid #514c4a;
+  opacity: ${({ opacity }) => opacity};
   border-radius: 10px;
   transition: opacity 0.5s, brightness 0.5s;
   &:hover {
-    opacity: 1;
+    opacity: .9;
     brightness: 1;
   }
-    
+
   @media (max-width: 768px) {
     opacity: 1;
     brightness: 1;
@@ -68,7 +67,7 @@ const Description = styled.p`
 
 interface PortfolioPanelProps {
   href: string;
-  imgSrc: string;
+  imgSrc?: string; // Allow it to be optional to conditionally render an image
   title: string;
   subtitle: string;
   description: string;
@@ -76,10 +75,10 @@ interface PortfolioPanelProps {
 
 const PortfolioPanel: React.FC<PortfolioPanelProps> = ({ href, imgSrc, title, subtitle, description }) => {
   return (
-    <a href={href} className="group w-full">
+    <a href={href} target="_blank" rel="noreferrer"className="group w-full">
       <Panel>
-        <Image alt="project" src={imgSrc} />
-        <Content>
+        {imgSrc && <Image alt="project" src={imgSrc} />}
+        <Content opacity={imgSrc ? 0 : 1}>
           <Title>{title}</Title>
           <Subtitle>{subtitle}</Subtitle>
           <Description>{description}</Description>
