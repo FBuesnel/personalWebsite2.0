@@ -8,7 +8,7 @@ export const posts = [
     content: post1,
   },
   {
-    id: 'blog2',
+    id: 'blog-post-2',
     title: 'Blog Post 2',
     content: post2,
   },

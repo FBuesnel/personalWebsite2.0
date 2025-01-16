@@ -2,7 +2,7 @@
 const { SitemapStream, streamToPromise } = require('sitemap');
 const fs = require('fs');
 const path = require('path');
-const hostname = 'https://fynnbuesnel.me';
+const hostname = 'https://www.fynnbuesnel.me';
 
 const postsDirectory = path.join(__dirname, 'posts');
 const postFiles = fs.readdirSync(postsDirectory).filter(file => file.endsWith('.md'));
