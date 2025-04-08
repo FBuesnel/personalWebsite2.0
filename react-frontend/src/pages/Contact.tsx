@@ -109,7 +109,53 @@ const SubmitButton = styled.button`
   }
 `;
 
+const Alert = styled.div`
+  grid-column: span 2;
+  font-weight: bold;
+  color: ${({ theme }) => theme.accent};
+  margin-top: 1rem;
+`;
+
 const Contact = () => {
+  const [alert, SetAlert] = React.useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const resetForm = e.target as HTMLFormElement;
+  
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      firstName: formData.get('firstName'),
+      lastName: formData.get('lastName'),
+      email: formData.get('email'),
+      subject: formData.get('subject'),
+      message: formData.get('message'),
+    };
+  
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/send-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+  
+      if (response.ok) {
+        SetAlert('Email sent successfully!');
+      } else {
+        SetAlert('Failed to send email.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      SetAlert('An error occurred. Please try again.');
+    } finally {
+      // Reset the form
+      resetForm.reset();
+      await new Promise(resolve => setTimeout(resolve, 5000));
+      SetAlert('');
+    }
+  };
+
   return (
     <StyledContainer>
       <FormWrapper>
@@ -118,9 +164,8 @@ const Contact = () => {
           I'm always happy to dicuss about my projects or experience, so feel free to reach out.
         </Description>
         <Form
-          method="POST"
-          action="https://script.google.com/macros/s/AKfycbyq-E7WOFMmrPK13YxiN2wztnVvg8rhRhVYy6B7e-BcNgDQ8Bbk74IoP_PS0yfO5E2law/exec"
-          id="myForm"
+          onSubmit={handleSubmit}
+          id="contact-form"
         >
           <Input type="text" name="firstName" placeholder="First Name" required />
           <Input type="text" name="lastName" placeholder="Last Name" required />
@@ -128,6 +173,7 @@ const Contact = () => {
           <Input type="text" name="subject" placeholder="Subject" required />
           <TextArea name="message" placeholder="Message" rows={5} required />
           <SubmitButton type="submit">Submit</SubmitButton>
+          {alert && <Alert>{alert}</Alert>}
         </Form>
       </FormWrapper>
     </StyledContainer>
