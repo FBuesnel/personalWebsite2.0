@@ -20,7 +20,7 @@ const SocialIconsContainer = styled.div`
 `;
 
 const SocialIcon = styled.a`
-  color: #a4998c;
+  color: ${({ theme }) => theme.secondaryText};
   display: inline-block;
   text-decoration: none;
   border-radius: 50%;
@@ -28,7 +28,7 @@ const SocialIcon = styled.a`
   transition: color 0.5s;
 
   &:hover {
-    color: #d8b26e;
+    color: ${({ theme }) => theme.accent};
   }
 `;
 

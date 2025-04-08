@@ -8,13 +8,13 @@ import { Container } from '../styles/GlobalStyles';
 import styled from 'styled-components';
 
 const StyledH1 = styled.h1`
-  color: #514c4a;
+  color: ${({ theme }) => theme.text};
   font-size: 2.5rem;
   font-weight: 600;
 `;
 
 const StyledP = styled.p`
-  color: #514c4a;
+  color: ${({ theme }) => theme.secondaryText};
   font-size: 1.2rem;
 `;
 

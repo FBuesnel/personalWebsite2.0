@@ -3,7 +3,7 @@ import profile from '../images/profilePicture.jpg';
 import { Container, Header } from '../styles/GlobalStyles';
 
 const StyledHeader = styled(Header)`
-  color: #514c4a;
+  color: ${({ theme }) => theme.text};
   font-weight: 400;
 
   @media (max-width: 768px) {
@@ -26,7 +26,7 @@ const ProfileImage = styled.img`
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  border: 3px solid #514c4a;
+  border: 3px solid ${({ theme }) => theme.border};
   object-fit: cover;
   aspect-ratio: 1 / 1;
   object-position: top;
@@ -36,7 +36,7 @@ const ProfileImage = styled.img`
 const Description = styled.p`
   margin-left: 20px;
   font-size: 22px;
-  color: #a4998c;
+  color: ${({ theme }) => theme.secondaryText};
 
   @media (max-width: 768px) {
     margin-left: 0;

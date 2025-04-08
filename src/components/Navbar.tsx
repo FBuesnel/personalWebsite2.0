@@ -2,19 +2,24 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { NavLink as Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
-
+import { FaRegMoon } from "react-icons/fa6";
+import { MdOutlineWbSunny } from "react-icons/md";
  
 const Nav = styled.nav`
-	background: #dad5d2;
-	padding: 20px 20px 2rem 0;
-	text-align: center;
-	justify-content: space-between;
+	background: ${({ theme }) => theme.background};
+	padding: 1rem 0 1rem 0;
+	display: flex;
+  text-align: center;
+  align-items: center;
   position: relative;
+  justify-content: center;
 `
 
 const NavMenu = styled.ul<{ isOpen: boolean }>`
-  align-items: center; /* Vertically center children */
+  align-items: center;
   flex-wrap: wrap;
+  display: flex;
+  align-select: center;
   @media screen and (max-width: 768px) {
     display: flex;
     flex-direction: column;
@@ -22,7 +27,7 @@ const NavMenu = styled.ul<{ isOpen: boolean }>`
     top: -300px;
     right: 0;
     width: 100%;
-    background: #dad5d2;
+    background: ${({ theme }) => theme.background};
     z-index: 10;
     padding-top: 20px;
     transition: top 0.5s;
@@ -31,7 +36,7 @@ const NavMenu = styled.ul<{ isOpen: boolean }>`
 `
 
 const NavLink = styled(Link)`
-  color: #a4998c;
+  color: ${({ theme }) => theme.text};
   text-decoration: none;
   font-size: 20px;
   position: relative;
@@ -40,7 +45,7 @@ const NavLink = styled(Link)`
     content: "";
     width: 0;
     height: 3px;
-    background: #d8b26e;
+    background: ${({ theme }) => theme.accent};
     position: absolute;
     bottom: -6px;
 	left: 0;
@@ -51,14 +56,14 @@ const NavLink = styled(Link)`
     width: 100%;
   }
   &.active {
-    color: #514c4a;
+    color: ${({ theme }) => theme.text};
     font-weight: 600;
   }
 `
 
 export const Bars = styled(FaBars)`
   display: none;
-  color: #808080;
+  color: ${({ theme }) => theme.text};
   @media screen and (max-width: 768px) {
     display: block;
     position: absolute;
@@ -72,7 +77,7 @@ export const Bars = styled(FaBars)`
 
 const CloseIcon = styled(FaTimes)`
   display: none;
-  color: #808080;
+  color: ${({ theme }) => theme.text};
   @media screen and (max-width: 768px) {
     display: block;
     position: absolute;
@@ -98,7 +103,34 @@ const Overlay = styled.div<{ isOpen: boolean }>`
   }
 `;
 
-const Navbar = () => {
+const ThemeToggle = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: ${({ theme }) => theme.text};
+  position: absolute;
+  left: 20px;
+  top: 35px;
+  align-items: center;
+
+  &:hover {
+    color: ${({ theme }) => theme.accent};
+  }
+
+  @media screen and (max-width: 768px) {
+    left: 20px;
+    top: 20px;
+  }
+`;
+
+// Navbar Props
+interface INavbarProps {
+  toggleTheme: () => void;
+  isDarkMode: boolean;
+}
+
+const Navbar = ({ toggleTheme, isDarkMode }: INavbarProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -108,6 +140,9 @@ const Navbar = () => {
     return (
       <>
       <Nav>
+        <ThemeToggle onClick={toggleTheme}>
+          {isDarkMode ? <MdOutlineWbSunny /> : <FaRegMoon /> }
+        </ThemeToggle>
         <Bars onClick={toggleMenu} />
         <NavMenu isOpen={isOpen}>
           <CloseIcon onClick={toggleMenu} />

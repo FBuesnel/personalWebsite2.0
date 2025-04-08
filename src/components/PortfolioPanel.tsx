@@ -1,90 +1,115 @@
-// filepath: src/components/PortfolioPanel.tsx
 import React from 'react';
 import styled from 'styled-components';
 
 const Panel = styled.div`
   position: relative;
   height: 100%;
-  &:hover img {
-    filter: brightness(0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: ${({ theme }) => theme.secondaryBackground};
+  border: 2px solid ${({ theme }) => theme.border};
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: center;
+  // Add a hover shadow
+  transition: box-shadow 0.3s ease;
+  &:hover {
+    box-shadow: 0 4px 20px ${({ theme }) => theme.shadow};
   }
 `;
 
 const Image = styled.img`
-  position: absolute;
   width: 100%;
-  height: 100%;
+  height: 200px;
   object-fit: cover;
   object-position: center;
-  border-radius: 10px;
-  border: 4px solid #514c4a;
-  transition: filter 0.5s;
-`;
-
-const Content = styled.div<{ opacity: number }>`
-  padding: 2rem;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: #dad5d2;
-  border: 4px solid #514c4a;
-  opacity: ${({ opacity }) => opacity};
-  border-radius: 10px;
-  transition: opacity 0.5s, brightness 0.5s;
-  &:hover {
-    opacity: .9;
-    brightness: 1;
-  }
-
-  @media (max-width: 768px) {
-    opacity: 1;
-    brightness: 1;
-  }
-
+  margin-bottom: 1rem;
 `;
 
 const Title = styled.h2`
-  font-size: 1rem;
-  color: #d8b26e;
-  text-align: center;
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  color: ${({ theme }) => theme.text};
   font-weight: bold;
 `;
 
-const Subtitle = styled.h1`
+const Subtitle = styled.h3`
   font-size: 1.25rem;
-  color: #514c4a;
-  text-align: center;
+  color: #a4998c;
   margin-bottom: 1rem;
 `;
 
 const Description = styled.p`
-  font-size: 1rem;
-  color: #a4998c;
-  text-align: center;
-  font-weight: 500;
+  font-size: 1.1rem;
+  color: ${({ theme }) => theme.secondaryText};
+  text-align: left;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 1rem;
+`;
+
+const Button = styled.a`
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: ${({ theme }) => theme.text};
+  background-color: ${({ theme }) => theme.background};
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.accent};
+  }
+`;
+
+const Padding = styled.div`
+padding: 1rem;
+`
+
 interface PortfolioPanelProps {
-  href: string;
   imgSrc?: string; // Allow it to be optional to conditionally render an image
   title: string;
   subtitle: string;
   description: string;
+  github?: string;
+  website?: string;
 }
 
-const PortfolioPanel: React.FC<PortfolioPanelProps> = ({ href, imgSrc, title, subtitle, description }) => {
+const PortfolioPanel: React.FC<PortfolioPanelProps> = ({
+  imgSrc,
+  title,
+  subtitle,
+  description,
+  github,
+  website,
+}) => {
   return (
-    <a href={href} target="_blank" rel="noreferrer"className="group w-full">
-      <Panel>
-        {imgSrc && <Image alt="project" src={imgSrc} />}
-        <Content opacity={imgSrc ? 0 : 1}>
-          <Title>{title}</Title>
-          <Subtitle>{subtitle}</Subtitle>
-          <Description>{description}</Description>
-        </Content>
-      </Panel>
-    </a>
+    <Panel>
+      {imgSrc && <Image alt={title} src={imgSrc} />}
+      <Title>{title}</Title>
+      <Padding>
+      {/* <Subtitle>{subtitle}</Subtitle> */}
+      <Description>{description}</Description>
+      <ButtonContainer>
+        {website && (
+          <Button href={website} target="_blank" rel="noopener noreferrer">
+            Website
+          </Button>
+        )}
+        {github && (
+          <Button href={github} target="_blank" rel="noopener noreferrer">
+            GitHub
+          </Button>
+        )}
+      </ButtonContainer>
+      </Padding>
+    </Panel>
   );
 };
 
