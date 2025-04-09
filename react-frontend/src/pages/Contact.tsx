@@ -109,11 +109,13 @@ const SubmitButton = styled.button`
   }
 `;
 
-const Alert = styled.div`
+const Alert = styled.div<{ isVisible: boolean }>`
   grid-column: span 2;
   font-weight: bold;
   color: ${({ theme }) => theme.accent};
-  margin-top: 1rem;
+  margin-top: ${({ isVisible }) => (isVisible ? '1rem' : '-20px')};
+  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
+  transition: margin-top 0.4s ease, opacity 0.4s ease;
 `;
 
 const Contact = () => {
@@ -141,7 +143,9 @@ const Contact = () => {
       });
       console.log('Response:', response);
       if (response.ok) {
-        SetAlert('Email sent successfully!');
+        SetAlert('Message sent successfully!');
+        // Only reset the form if it was sent correctly
+        resetForm.reset();
       } else {
         SetAlert('Failed to send email.');
       }
@@ -149,8 +153,6 @@ const Contact = () => {
       console.error('Error:', error);
       SetAlert('An error occurred. Please try again.');
     } finally {
-      // Reset the form
-      resetForm.reset();
       await new Promise(resolve => setTimeout(resolve, 5000));
       SetAlert('');
     }
@@ -163,17 +165,14 @@ const Contact = () => {
         <Description>
           I'm always happy to dicuss about my projects or experience, so feel free to reach out.
         </Description>
-        <Form
-          onSubmit={handleSubmit}
-          id="contact-form"
-        >
+        <Form onSubmit={handleSubmit}>
           <Input type="text" name="firstName" placeholder="First Name" required />
           <Input type="text" name="lastName" placeholder="Last Name" required />
           <Input type="email" name="email" placeholder="Email Address" required />
           <Input type="text" name="subject" placeholder="Subject" required />
           <TextArea name="message" placeholder="Message" rows={5} required />
           <SubmitButton type="submit">Submit</SubmitButton>
-          {alert && <Alert>{alert}</Alert>}
+          <Alert isVisible={!!alert}>{alert}</Alert>
         </Form>
       </FormWrapper>
     </StyledContainer>
