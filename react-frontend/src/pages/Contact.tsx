@@ -139,7 +139,7 @@ const Contact = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-  
+      console.log('Response:', response);
       if (response.ok) {
         SetAlert('Email sent successfully!');
       } else {

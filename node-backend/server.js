@@ -44,3 +44,10 @@ app.post('/send-email', async (req, res) => {
 
 // Export the app for Vercel
 module.exports = app;
+
+// Run the server locally if not deployed to Vercel
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
