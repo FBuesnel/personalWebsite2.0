@@ -61,7 +61,7 @@ child and his father to have lived in. A bit behind was a paradoxical forest wit
 dwarfed his old home. Akshan wept for the house, where he experiences his childhood
 beauty truly cut-off becoming the past, but he wept out of joy too for his garden, no
 Forest. All that remains of his father and his house are memories; the only thing that
-remains of his Garden is everything and more. 
+remains of his Garden is everything and more. \
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; As he parks the car and walks behind the house, the Cedar trees look even more
 majestic, and his garden disorganized but beautiful just like he planted it. This was his
 legacy; this was his life. It just stood there, unknown for a few decades to him, but never

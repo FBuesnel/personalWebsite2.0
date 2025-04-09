@@ -7,19 +7,19 @@ import { Container, Header, Description } from '../styles/GlobalStyles';
 
 const StyledUL = styled.ul`
   list-style-type: list;
+  font-size: 20px;
   padding: 0;
-  li {
-    &:hover {
-      color: #514c4a;
-      a { color: #514c4a; }
-    }
-  }
+  margin-left: 20px;
+  color: ${({ theme }) => theme.secondaryText};
 `
 
 const StyledLink = styled(Link)`
-  font-size: 16px;
-  color: #a4998c;
+  font-size: 20px;
+  color: ${({ theme }) => theme.secondaryText};
   cursor: pointer;
+  &:hover {
+    color: ${({ theme }) => theme.accent};
+  }
 `
 
 const StyledContainer = styled(Container)`

@@ -14,5 +14,5 @@ export const Header = styled.div`
 export const Description = styled.div`
   font-size: 1.25rem;
   padding-bottom: 20px;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.secondaryText};
 `;

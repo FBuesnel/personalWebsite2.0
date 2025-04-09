@@ -7,10 +7,5 @@ export const posts = [
     title: 'Moving Into Eternity',
     content: post1,
   },
-  {
-    id: 'blog-post-2',
-    title: 'Blog Post 2',
-    content: post2,
-  },
   // Add more posts here
 ];
