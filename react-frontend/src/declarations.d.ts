@@ -19,6 +19,6 @@ declare module '*.svg' {
 }
 
 declare module '*.md' {
-    const content: string;
+    const content: any;
     export default content;
 }
