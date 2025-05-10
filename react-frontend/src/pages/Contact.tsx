@@ -102,10 +102,18 @@ const SubmitButton = styled.button`
   font-weight: bold;
   cursor: pointer;
   transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background: ${({ theme }) => theme.accent};
     color: ${({ theme }) => theme.background};
+  }
+
+  &:disabled {
+    cursor: not-allowed; /* Prevent clicking */
+    pointer-events: none; /* Disable hover and click */
   }
 `;
 
@@ -118,11 +126,31 @@ const Alert = styled.div<{ isVisible: boolean }>`
   transition: margin-top 0.4s ease, opacity 0.4s ease;
 `;
 
+const Spinner = styled.div`
+  border: 3px solid ${({ theme }) => theme.secondaryBackground};
+  border-top: 3px solid ${({ theme }) => theme.accent};
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite; 
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
 const Contact = () => {
   const [alert, SetAlert] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
 
     const resetForm = e.target as HTMLFormElement;
   
@@ -144,6 +172,7 @@ const Contact = () => {
       console.log('Response:', response);
       if (response.ok) {
         SetAlert('Message sent successfully!');
+        setLoading(false);
         // Only reset the form if it was sent correctly
         resetForm.reset();
       } else {
@@ -171,7 +200,9 @@ const Contact = () => {
           <Input type="email" name="email" placeholder="Email Address" required />
           <Input type="text" name="subject" placeholder="Subject" required />
           <TextArea name="message" placeholder="Message" rows={5} required />
-          <SubmitButton type="submit">Submit</SubmitButton>
+          <SubmitButton type="submit" disabled={loading}>
+           {loading ? <Spinner /> : 'Send Message'}
+          </SubmitButton>
           <Alert isVisible={!!alert}>{alert}</Alert>
         </Form>
       </FormWrapper>
