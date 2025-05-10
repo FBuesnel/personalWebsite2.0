@@ -9,7 +9,7 @@ const StyledBlockquote = styled.blockquote`
 `;
 
 const StyledStrong = styled.strong`
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.secondaryText};
   font-weight: normal;
   font-style: italic;
 `;
