@@ -22,6 +22,9 @@ const StyledHeading = styled.strong`
 
 const StyledParagraph = styled.p`
   color: ${({ theme }) => theme.secondaryText};
+`;
+
+const EmptyLine = styled.div`
   margin-bottom: 1em;
 `;
 
@@ -31,7 +34,9 @@ export default function formatmd(md: string | null) {
   return lines
     .map((line, idx) => {
       line = line.trim();
-      if (!line) return null;
+      if (!line) {
+        return <EmptyLine key={idx} />;
+      }
 
       if (line.startsWith('>')) {
         return (
