@@ -1,13 +1,8 @@
 // filepath: /Users/fynnbuesnel/Desktop/computerScience/personalWebsite2.0/src/pages/Portfolio.tsx
 import React from 'react';
 import styled from 'styled-components';
-import graphing from '../images/3DGraphing.jpg';
-import ibkeyword from '../images/IB-Keyword-Search.jpg';
-import sfwbookclub from '../images/SFWBookclub.jpg';
-import wordsearcher from '../images/wordSearcher.jpg';
+import { graphing, ibkeyword, sfwbookclub, wordsearcher, PersonalWebsite1, PersonalWebsite2 } from '../images/portfolio';
 import PortfolioPanel from '../components/PortfolioPanel';
-import PersonalWebsite1 from '../images/personalWebsite1.png';
-import PersonalWebsite2 from '../images/personalWebsite2.png';
 
 import { Container, Header, Description } from '../styles/GlobalStyles';
 

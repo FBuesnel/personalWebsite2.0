@@ -5,8 +5,11 @@ const Panel = styled.div`
   border: 4px solid ${({ theme }) => theme.border};
   border-radius: 10px;
   background-color: ${({ theme }) => theme.secondaryBackground};
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 1rem;
+  transition: box-shadow 0.3s ease;
+  &:hover {
+    box-shadow: 0 4px 20px ${({ theme }) => theme.shadow};
+  }
 `;
 
 const Header = styled.div`
