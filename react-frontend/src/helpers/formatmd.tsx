@@ -1,3 +1,30 @@
+import styled from 'styled-components';
+
+const StyledBlockquote = styled.blockquote`
+  font-style: italic;
+  color: ${({ theme }) => theme.secondaryText};
+  border-left: 4px solid ${({ theme }) => theme.accent};
+  padding-left: 1em;
+  margin: 1em 0;
+`;
+
+const StyledStrong = styled.strong`
+  color: ${({ theme }) => theme.text};
+  font-weight: normal;
+  font-style: italic;
+`;
+
+const StyledHeading = styled.strong`
+  color: ${({ theme }) => theme.text};
+  font-weight: bold;
+  font-size: 2em;
+`;
+
+const StyledParagraph = styled.p`
+  color: ${({ theme }) => theme.secondaryText};
+  margin-bottom: 1em;
+`;
+
 export default function formatmd(md: string | null) {
   if (!md) return null;
   const lines = md.split('\n');
@@ -5,38 +32,30 @@ export default function formatmd(md: string | null) {
     .map((line, idx) => {
       line = line.trim();
       if (!line) return null;
+
       if (line.startsWith('>')) {
         return (
-          <blockquote
-            key={idx}
-            style={{
-              fontStyle: 'italic',
-              color: '#a4998c',
-              borderLeft: '4px solid #d8b26e',
-              paddingLeft: '1em',
-              margin: '1em 0'
-            }}
-          >
+          <StyledBlockquote key={idx}>
             {line.replace(/^>\s?/, '')}
-          </blockquote>
+          </StyledBlockquote>
         );
       } else if (line.startsWith('*') && line.endsWith('*')) {
         return (
-          <strong key={idx} style={{ color: '#514c4a', fontStyle: 'italic' }}>
+          <StyledStrong key={idx}>
             {line.replace(/\*/g, '')}
-          </strong>
-        )
+          </StyledStrong>
+        );
       } else if (line.startsWith('#')) {
-          return (
-            <strong key={idx} style={{ color: '#514c4a', fontWeight: 'bold', fontSize: '2em' }}>
-              {line.replace(/\#/g, '')}
-            </strong>
-          );
+        return (
+          <StyledHeading key={idx}>
+            {line.replace(/\#/g, '')}
+          </StyledHeading>
+        );
       } else {
         return (
-          <p key={idx} style={{ color: '#6b5e54', marginBottom: '1em' }}>
+          <StyledParagraph key={idx}>
             {line}
-          </p>
+          </StyledParagraph>
         );
       }
     })
