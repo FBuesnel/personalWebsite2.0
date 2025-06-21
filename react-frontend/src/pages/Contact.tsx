@@ -55,6 +55,7 @@ const Input = styled.input`
   font-size: 1rem;
   outline: none;
   margin: 0 0 10px 0;
+  padding: 15px;
 
   &:focus {
     border-color: ${({ theme }) => theme.accent};
@@ -72,6 +73,7 @@ const Input = styled.input`
 
 const TextArea = styled.textarea`
   grid-column: span 2;
+  padding: 15px;
   border: 2px solid ${({ theme }) => theme.border};
   border-radius: 6px;
   background: ${({ theme }) => theme.background};

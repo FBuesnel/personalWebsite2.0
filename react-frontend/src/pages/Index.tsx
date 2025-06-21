@@ -63,7 +63,7 @@ const Home = () => {
       <Row>
         <ProfileImage src={profile} alt="Me" />
         <Description>
-          Hey, I'm Fynn Buesnel. I'm currently a student at <b>Boston University</b> pursuing a BA in <b>Computer Science</b> and a BA in <b>Economics</b>. I love fashion, volunteering, teaching, and currently web development utilizing React. Check out my experiences and projects!
+          Hey, I'm Fynn Buesnel. I'm currently a student at <b>Boston University</b> pursuing a BA in <b>Computer Science</b> and a BA in <b>Economics</b>. I love fashion, volunteering, teaching, and currently mobile development utilizing React-Native. Check out my experiences and projects!
         </Description>
       </Row>
     </StyledContainer>

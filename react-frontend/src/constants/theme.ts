@@ -4,7 +4,7 @@ export const lightTheme = {
     text: '#514c4a',
     accent: '#d8b26e',
     secondaryText: '#6b5e54', 
-    border: '#',
+    border: '#FFF',
     shadow: 'rgba(0, 0, 0, 0.3)',
 };
   
@@ -14,6 +14,6 @@ export const darkTheme = {
     text: '#d1d5db',
     accent: '#d8b26e',
     secondaryText: '#8c7f75', 
-    border: '#',
+    border: '#514c4a',
     shadow: 'rgba(255, 255, 255, 0.3)',
 };

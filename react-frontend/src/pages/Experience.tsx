@@ -42,7 +42,7 @@ const Experience = () => {
         <ExperiencePanel
           imgSrc={beehiveai}
           title="Full-Stack Development Intern"
-          subtitle="Beehive AI (May-Aug 2024)"
+          subtitle="Beehive AI (May - Aug 2024)"
           description={[
             'Developed a new file upload front-end in Typescript to streamline the experience for over 500 users.',
             'Fixed over 30 bugs throughout their web app locating their source and pushing fixes to development.',
@@ -51,7 +51,7 @@ const Experience = () => {
         <ExperiencePanel
           imgSrc={joejuice}
           title="Juicer"
-          subtitle="Joe & The Juice (May-Aug 2023)"
+          subtitle="Joe & The Juice (May - Aug 2023)"
           description={[
             'Handled hundreds of customer orders every day, making juices, sandwiches, and shakes while creating a good atmosphere in the store.',
             'Balanced work responsibilities and pursued my passion for programming during the summer.',
@@ -71,7 +71,7 @@ const Experience = () => {
         <ExperiencePanel
           imgSrc={conventlogo}
           title="Technology Intern"
-          subtitle="Convent & Stuart Hall (May 2021 - Aug. 2021)"
+          subtitle="Convent & Stuart Hall (May - Aug 2021)"
           description={[
             'Facilitated faculty device transfers by moving their data and preparing their new computers.',
             'Set up new devices across campus like TVs in every classroom.',
@@ -86,7 +86,7 @@ const Experience = () => {
           title="Boston University"
           subtitle="2023-2027"
           description={[
-            'Grade: GPA 3.93/4.00',
+            'Grade: GPA 3.91/4.00',
             'Degrees: Bachelor\'s of Arts in Computer Science, Bachelor\'s of Arts in Economics',
             'Activities and Societies: KTP (Kappa Theta Pi Lambda Chapter), ΣΧ (Sigma Chi Iota Upsilon Chapter), Food Runner\'s Program',
             'Classes: CS131 Combinatoric Structures, CS132 Geometric Algorithms, CS330 Analysis of Algorithms, CS460 Introduction to Databse Systems, CS411 Software Engineering',
