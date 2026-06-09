@@ -20,9 +20,10 @@ const AppWrapper = styled.div`
 `;
 
 function App() {
-    const [isDarkMode, setIsDarkMode] = useState(true);
+    const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem('theme') !== 'light');
 
     const toggleTheme = () => {
+        localStorage.setItem('theme', isDarkMode ? 'light' : 'dark');
         setIsDarkMode(!isDarkMode);
     };
 

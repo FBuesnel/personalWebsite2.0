@@ -7,7 +7,7 @@ export const Container = styled.div`
 export const Header = styled.div`
   margin: 0;
   font-size: 2.5rem;
-  color: #${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.text};
   font-weight: bold;
 `
 

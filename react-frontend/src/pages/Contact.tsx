@@ -194,7 +194,7 @@ const Contact = () => {
       <FormWrapper>
         <StyledHeader>Contact Me</StyledHeader>
         <Description>
-          I'm always happy to dicuss about my projects or experience, so feel free to reach out.
+          I'm always happy to discuss my projects or experience, so feel free to reach out.
         </Description>
         <Form onSubmit={handleSubmit}>
           <Input type="text" name="firstName" placeholder="First Name" required />

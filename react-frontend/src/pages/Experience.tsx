@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { joejuice, conventlogo, beehiveai, thenudge, BULogo } from '../images/experience';
+import { joejuice, conventlogo, beehiveai, thenudge, BULogo, mirrortab, equityhealth, ktp } from '../images/experience';
 import ExperiencePanel from '../components/ExperiencePanel';
 import '../index.css';
 
@@ -22,21 +22,81 @@ const Experience = () => {
       <Header>Experience</Header>
       <GridContainer>
         <ExperiencePanel
-          imgSrc={thenudge}
-          title="Software Engineering Intern"
-          subtitle="The Nudge (Jun-Aug 2025)"
+          imgSrc={mirrortab}
+          title="Software Engineer Intern"
+          subtitle="MirrorTab (Jun 2026 - Present)"
           description={[
-            'Internship accepted, updating description soon once completed.',
+            'Joined MirrorTab for summer 2026 to help build Haven, an AI-powered browser safety layer that helps people verify links and avoid fake sites.',
+            'Working on the engineering team building technology that keeps users safer online.',
+          ]}
+        />
+        <ExperiencePanel
+          imgSrc={thenudge}
+          title="Software Engineer Contractor"
+          subtitle="The Nudge (Aug 2025 - Jun 2026)"
+          description={[
+            'Architected automated user engagement workflows for 50,000+ users using Scala, supporting platform retention goals.',
+            'Shipped a creator video upload flow for 500+ users and redesigned a content display component through two rounds of designer and user feedback.',
+            'Led the Expo SDK 53 to 54 upgrade with full end-to-end QA across all React Native features.',
+            'Migrated in-app purchase validation from Apple StoreKit V1 to V2, updating receipt verification endpoints critical to revenue infrastructure.',
+            'Transitioned weather data from OpenWeatherMap to Apple WeatherKit, improving accuracy for iOS users and reducing third-party API costs.',
+          ]}
+        />
+        <ExperiencePanel
+          imgSrc={BULogo}
+          title="Course Assistant for CS501"
+          subtitle="Boston University (Aug - Dec 2025)"
+          description={[
+            'Provided mentorship and grading support for a graduate-level course on server application development.',
+            'Created and refined grading rubrics to ensure fairness and consistency across assignments.',
+            'Advised students on technologies for their final projects based on my experience in software engineering roles.',
+          ]}
+        />
+        <ExperiencePanel
+          imgSrc={ktp}
+          title="Vice President of Finance"
+          subtitle="Kappa Theta Pi, Lambda Chapter (Dec 2024 - Dec 2025)"
+          description={[
+            'Managed an $11,000 budget for my professional fraternity, allocating funds and hosting fundraisers.',
+            'Collected membership dues from 60+ members.',
+          ]}
+        />
+        <ExperiencePanel
+          imgSrc={equityhealth}
+          title="Data Analyst Intern"
+          subtitle="Equity Health (Aug 2025)"
+          description={[
+            'Published multiple text campaigns to 500+ patients, increasing cancer screening rates.',
+            'Tracked attendance data to measure the impact of initiatives like text campaigns and follow-up calls.',
+          ]}
+        />
+        <ExperiencePanel
+          imgSrc={thenudge}
+          title="Software Engineer Intern"
+          subtitle="The Nudge (Jun - Aug 2025)"
+          description={[
+            'Built and shipped a mobile ticketing commerce feature accessible to 2.5M+ users, processing $15k+ in gross transaction volume.',
+            'Optimized OpenAI batch API costs by 50%, saving results directly to Google Sheets via automation.',
+            'Overhauled an internal tool used by 30+ e-commerce partners.',
           ]}
         />
         <ExperiencePanel
           imgSrc={BULogo}
           title="Course Assistant for CS132"
-          subtitle="Boston Unversity (Aug 2024 - May 2025)"
+          subtitle="Boston University (Aug 2024 - May 2025)"
           description={[
             'Lead weekly office hours to help 300+ students solidify linear algebra concepts.',
             'Direct students on how to implement linear algebra concepts using Python.',
             'Grade over 200 assignments per week by creating a rubric and assigning points.'
+          ]}
+        />
+        <ExperiencePanel
+          imgSrc={ktp}
+          title="Vice President of Engagement"
+          subtitle="Kappa Theta Pi, Lambda Chapter (Aug - Dec 2024)"
+          description={[
+            'Planned two events per month for the 80+ members of my professional fraternity.',
+            'Managed a budget of $4,000+ during the semester.',
           ]}
         />
         <ExperiencePanel
@@ -86,10 +146,10 @@ const Experience = () => {
           title="Boston University"
           subtitle="2023-2027"
           description={[
-            'Grade: GPA 3.91/4.00',
+            'Grade: GPA 3.93/4.00, Dean\'s List (All Semesters)',
             'Degrees: Bachelor\'s of Arts in Computer Science, Bachelor\'s of Arts in Economics',
-            'Activities and Societies: KTP (Kappa Theta Pi Lambda Chapter), ΣΧ (Sigma Chi Iota Upsilon Chapter), Food Runner\'s Program',
-            'Classes: CS131 Combinatoric Structures, CS132 Geometric Algorithms, CS330 Analysis of Algorithms, CS460 Introduction to Databse Systems, CS411 Software Engineering',
+            'Activities and Societies: KTP (Kappa Theta Pi Lambda Chapter), ΣΧ (Sigma Chi Iota Upsilon Chapter), Fashion Club, Student Food Rescue, Boston Hacks, Intramural Volleyball',
+            'Classes: CS131 Combinatoric Structures, CS132 Geometric Algorithms, CS330 Analysis of Algorithms, CS460 Introduction to Database Systems, CS411 Software Engineering, CS392 .NET and C# Programming',
           ]}
         />
         <ExperiencePanel

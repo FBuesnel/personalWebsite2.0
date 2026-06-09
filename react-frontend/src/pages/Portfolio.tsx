@@ -41,7 +41,7 @@ const Portfolio = () => {
 		      imgSrc={PersonalWebsite2}
           title="Personal Website 2.0"
           subtitle="Personal Website 2.0"
-          description="Created using React, Typescript, and Styled Components. It's' a complete redesign of my original website, with a focus on improving the user experience, overall aesthetic, and longevity."
+          description="Created using React, Typescript, and Styled Components. It's a complete redesign of my original website, with a focus on improving the user experience, overall aesthetic, and longevity."
         />
         <PortfolioPanel
           github="https://github.com/FBuesnel/3D-Graphing-Experiments"
