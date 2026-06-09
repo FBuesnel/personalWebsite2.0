@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { posts } from '../posts/posts';
+import usePageMeta from '../helpers/usePageMeta';
 
 import { Container, Header, Description } from '../styles/GlobalStyles';
 
@@ -33,6 +34,10 @@ const StyledContainer = styled(Container)`
 `;
 
 const Posts = () => {
+  usePageMeta(
+    'Posts | Fynn Buesnel',
+    'Stories, poetry, and thoughts by Fynn Buesnel.'
+  );
   return (
     <StyledContainer>
       <Header>Posts</Header>

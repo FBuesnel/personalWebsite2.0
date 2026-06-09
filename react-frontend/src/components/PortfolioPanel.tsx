@@ -33,12 +33,6 @@ const Title = styled.h2`
   font-weight: bold;
 `;
 
-const Subtitle = styled.h3`
-  font-size: 1.25rem;
-  color: #a4998c;
-  margin-bottom: 1rem;
-`;
-
 const Description = styled.p`
   font-size: 1.1rem;
   color: ${({ theme }) => theme.secondaryText};
@@ -94,7 +88,6 @@ const PortfolioPanel: React.FC<PortfolioPanelProps> = ({
       {imgSrc && <Image alt={title} src={imgSrc} />}
       <Title>{title}</Title>
       <Padding>
-      {/* <Subtitle>{subtitle}</Subtitle> */}
       <Description>{description}</Description>
       <ButtonContainer>
         {website && (

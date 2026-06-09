@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import usePageMeta from '../helpers/usePageMeta';
 import { Container, Header } from '../styles/GlobalStyles';
 
 const StyledContainer = styled(Container)`
@@ -147,6 +148,10 @@ const Spinner = styled.div`
 `;
 
 const Contact = () => {
+  usePageMeta(
+    'Contact | Fynn Buesnel',
+    'Get in touch with Fynn Buesnel about his projects, experience, or writing.'
+  );
   const [alert, SetAlert] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 

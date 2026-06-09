@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { joejuice, conventlogo, beehiveai, thenudge, BULogo, mirrortab, equityhealth, ktp } from '../images/experience';
 import ExperiencePanel from '../components/ExperiencePanel';
+import usePageMeta from '../helpers/usePageMeta';
 import '../index.css';
 
 import { Container, Header } from '../styles/GlobalStyles';
@@ -17,6 +18,10 @@ const GridContainer = styled.div`
 `;
 
 const Experience = () => {
+  usePageMeta(
+    'Experience | Fynn Buesnel',
+    'Software engineering roles at MirrorTab, The Nudge, and Beehive AI, plus teaching and leadership at Boston University.'
+  );
   return (
     <Container>
       <Header>Experience</Header>

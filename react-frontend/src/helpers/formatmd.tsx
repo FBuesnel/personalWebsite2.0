@@ -53,7 +53,7 @@ export default function formatmd(md: string | null) {
       } else if (line.startsWith('#')) {
         return (
           <StyledHeading key={idx}>
-            {line.replace(/\#/g, '')}
+            {line.replace(/#/g, '')}
           </StyledHeading>
         );
       } else {

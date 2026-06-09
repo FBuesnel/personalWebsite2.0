@@ -4,15 +4,12 @@ const fs = require('fs');
 const path = require('path');
 const hostname = 'https://www.fynnbuesnel.me';
 
-const postsDirectory = path.join(__dirname, 'posts');
-const postFiles = fs.readdirSync(postsDirectory).filter(file => file.endsWith('.md'));
-
-const posts = postFiles.map(file => {
-  const id = path.basename(file, '.md');
-  const title = fs.readFileSync(path.join(postsDirectory, file), 'utf8').split('\n')[0].replace('# ', '');
-  const urlTitle = title.toLowerCase().replace(/\s+/g, '-');
-  console.log(urlTitle);
-  return { id, title: urlTitle };
+// Post URLs come from the `id` fields in posts.ts — those are the real route
+// slugs (/posts/:id), not the markdown titles.
+const postsRegistry = fs.readFileSync(path.join(__dirname, 'posts', 'posts.ts'), 'utf8');
+const posts = [...postsRegistry.matchAll(/id:\s*'([^']+)'/g)].map(match => {
+  console.log(match[1]);
+  return { id: match[1] };
 });
 
 const urls = [
@@ -27,7 +24,7 @@ const urls = [
 // Add blog posts to the sitemap
 posts.forEach((post) => {
   urls.push({
-    url: `/posts/${post.title}`,
+    url: `/posts/${post.id}`,
     changefreq: 'yearly',
     priority: 0.3,
   });

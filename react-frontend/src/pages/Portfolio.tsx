@@ -1,8 +1,9 @@
 // filepath: /Users/fynnbuesnel/Desktop/computerScience/personalWebsite2.0/src/pages/Portfolio.tsx
 import React from 'react';
 import styled from 'styled-components';
-import { graphing, ibkeyword, sfwbookclub, wordsearcher, PersonalWebsite1, PersonalWebsite2 } from '../images/portfolio';
+import { graphing, ibkeyword, sfwbookclub, wordsearcher, PersonalWebsite1, PersonalWebsite2, lumina, dormdash } from '../images/portfolio';
 import PortfolioPanel from '../components/PortfolioPanel';
+import usePageMeta from '../helpers/usePageMeta';
 
 import { Container, Header, Description } from '../styles/GlobalStyles';
 
@@ -23,11 +24,29 @@ const GridContainer = styled.div`
 `;
 
 const Portfolio = () => {
+  usePageMeta(
+    'Portfolio | Fynn Buesnel',
+    'Projects by Fynn Buesnel, including LUMINA, a production wellness booking platform, and DormDash, a cross-platform delivery app.'
+  );
   return (
     <Container>
       <Header>Portfolio</Header>
       <Description>A variety of different projects I've made. <ConditionalText>Click on the links to see the code or them live. </ConditionalText> </Description>
       <GridContainer>
+        <PortfolioPanel
+          website="https://lumina-reno.com"
+          imgSrc={lumina}
+          title="LUMINA"
+          subtitle="Wellness Booking Platform"
+          description="A production booking platform for LUMINA, a red light therapy and wellness studio in Reno, NV. Members purchase session packs and subscriptions through Stripe and book appointments online, while staff manage scheduling, check-ins, and automated emails from a full admin dashboard. Built with Next.js, TypeScript, and PostgreSQL."
+        />
+        <PortfolioPanel
+          github="https://github.com/FBuesnel/DormDash-CS392"
+          imgSrc={dormdash}
+          title="DormDash"
+          subtitle="Cross-Platform Delivery App"
+          description="A cross-platform food delivery app built with a four-person team. Features a React Native frontend, a C# ASP.NET Core backend with a Supabase SQL database, and Stripe integration for secure payments and payouts."
+        />
 	  	<PortfolioPanel
           imgSrc={sfwbookclub}
           title="SFW Bookclub"

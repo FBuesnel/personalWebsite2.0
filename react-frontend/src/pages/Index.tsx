@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import profile from '../images/profilePicture.jpg';
+import usePageMeta from '../helpers/usePageMeta';
 import { Container, Header } from '../styles/GlobalStyles';
 
 const StyledHeader = styled(Header)`
@@ -55,6 +56,10 @@ const StyledContainer = styled(Container)`
 `;
 
 const Home = () => {
+  usePageMeta(
+    'Fynn Buesnel | Software Engineer',
+    'Fynn Buesnel is a software engineer studying Computer Science and Economics at Boston University, currently building Haven at MirrorTab.'
+  );
   return (
     <StyledContainer>
       <StyledHeader>

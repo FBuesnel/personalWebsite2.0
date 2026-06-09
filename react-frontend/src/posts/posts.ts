@@ -25,7 +25,7 @@ export const posts = [
   {
     id: 'places-to-return-to',
     title: 'Places I want to go back to, before I die',
-    quote: 'I\’d like a bench named “Fynn"',
+    quote: 'I’d like a bench named “Fynn"',
     content: post4,
   }
   // Add more posts here
