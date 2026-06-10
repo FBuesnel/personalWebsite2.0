@@ -9,3 +9,37 @@ html,
 body {
   font-family: var(--font-baskerville), serif;
 }
+
+/* Theme palettes. html[data-theme] is set before first paint by the inline
+   script in app/layout.tsx, so there is no flash for either preference. */
+html[data-theme='dark'] {
+  --background: #1e1e1e;
+  --secondary-background: #2a2a2a;
+  --text: #d1d5db;
+  --accent: #d8b26e;
+  --secondary-text: #8c7f75;
+  --border: #514c4a;
+  --shadow: rgba(255, 255, 255, 0.15);
+}
+
+html[data-theme='light'] {
+  --background: #dad5d2;
+  --secondary-background: #f7f4f0;
+  --text: #514c4a;
+  --accent: #d8b26e;
+  --secondary-text: #6b5e54;
+  --border: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.25);
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Visible keyboard focus, invisible to mouse users */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

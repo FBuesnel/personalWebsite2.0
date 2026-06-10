@@ -1,21 +1,14 @@
-export const lightTheme = {
-    background: '#dad5d2',
-    secondaryBackground: '#f3f4f6',
-    text: '#514c4a',
-    accent: '#d8b26e',
-    secondaryText: '#6b5e54',
-    border: '#FFF',
-    shadow: 'rgba(0, 0, 0, 0.3)',
+// The actual palette values live in app/globals.css as CSS custom properties
+// keyed by html[data-theme]. styled-components receive these var() references,
+// so theme switching is pure CSS - no flash, no re-render, pages stay static.
+export const cssVarTheme = {
+    background: 'var(--background)',
+    secondaryBackground: 'var(--secondary-background)',
+    text: 'var(--text)',
+    accent: 'var(--accent)',
+    secondaryText: 'var(--secondary-text)',
+    border: 'var(--border)',
+    shadow: 'var(--shadow)',
 };
 
-export const darkTheme = {
-    background: '#1e1e1e',
-    secondaryBackground: '#2a2a2a',
-    text: '#d1d5db',
-    accent: '#d8b26e',
-    secondaryText: '#8c7f75',
-    border: '#514c4a',
-    shadow: 'rgba(255, 255, 255, 0.3)',
-};
-
-export type AppTheme = typeof darkTheme;
+export type AppTheme = typeof cssVarTheme;

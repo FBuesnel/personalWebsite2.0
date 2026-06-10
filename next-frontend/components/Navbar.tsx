@@ -7,6 +7,8 @@ import { usePathname } from "next/navigation";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { FaRegMoon } from "react-icons/fa6";
 import { MdOutlineWbSunny } from "react-icons/md";
+import AdminModeToggle from "./AdminModeToggle";
+import { logout } from "../app/admin/actions";
 
 const Nav = styled.nav`
 	background: ${({ theme }) => theme.background};
@@ -27,13 +29,14 @@ const NavMenu = styled.ul<{ $isOpen: boolean }>`
     display: flex;
     flex-direction: column;
     position: fixed;
+    top: 0;
     right: 0;
     width: 100%;
     background: ${({ theme }) => theme.background};
     z-index: 10;
-    padding-top: 20px;
-    transition: top 0.5s;
-    top: ${({ $isOpen }) => ($isOpen ? '0' : '-300px')};
+    padding: 20px 0;
+    transition: transform 0.5s;
+    transform: translateY(${({ $isOpen }) => ($isOpen ? '0' : '-110%')});
   }
 `
 
@@ -62,6 +65,21 @@ const NavLink = styled(Link)`
     font-weight: 600;
   }
 `
+
+const SignOutButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 20px;
+  color: ${({ theme }) => theme.secondaryText};
+  margin: 15px 15px;
+  transition: color 0.3s;
+
+  &:hover {
+    color: ${({ theme }) => theme.accent};
+  }
+`;
 
 export const Bars = styled(FaBars)`
   display: none;
@@ -126,12 +144,21 @@ const ThemeToggle = styled.button`
   }
 `;
 
-const links = [
+const publicLinks = [
   { href: '/', label: 'Home' },
   { href: '/experience', label: 'Experience' },
   { href: '/portfolio', label: 'Portfolio' },
   { href: '/posts', label: 'Posts' },
   { href: '/contact', label: 'Contact' },
+];
+
+const adminLinks = [
+  { href: '/admin', label: 'Dashboard' },
+  { href: '/admin/experience', label: 'Experience' },
+  { href: '/admin/portfolio', label: 'Portfolio' },
+  { href: '/admin/posts', label: 'Posts' },
+  { href: '/admin/resume', label: 'Resume' },
+  { href: '/admin/habits', label: 'Habits' },
 ];
 
 interface INavbarProps {
@@ -143,12 +170,17 @@ const Navbar = ({ toggleTheme, isDarkMode }: INavbarProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
 
+    const inAdmin = pathname.startsWith('/admin');
+    const links = inAdmin ? adminLinks : publicLinks;
+
     const toggleMenu = () => {
       setIsOpen(!isOpen);
     }
 
     const isActive = (href: string) =>
-      href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`);
+      href === '/' || href === '/admin'
+        ? pathname === href
+        : pathname === href || pathname.startsWith(`${href}/`);
 
     return (
       <>
@@ -156,6 +188,7 @@ const Navbar = ({ toggleTheme, isDarkMode }: INavbarProps) => {
         <ThemeToggle onClick={toggleTheme}>
           {isDarkMode ? <MdOutlineWbSunny /> : <FaRegMoon /> }
         </ThemeToggle>
+        <AdminModeToggle />
         <Bars onClick={toggleMenu} />
         <NavMenu $isOpen={isOpen}>
           <CloseIcon onClick={toggleMenu} />
@@ -169,6 +202,11 @@ const Navbar = ({ toggleTheme, isDarkMode }: INavbarProps) => {
               {link.label}
             </NavLink>
           ))}
+          {inAdmin && (
+            <form action={logout}>
+              <SignOutButton type="submit">Sign out</SignOutButton>
+            </form>
+          )}
         </NavMenu>
       </Nav>
       <Overlay $isOpen={isOpen} onClick={toggleMenu} />

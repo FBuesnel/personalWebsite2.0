@@ -5,7 +5,10 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url       = env("DATABASE_URL")
+  // Neon's pooled endpoint breaks Prisma's migration advisory lock, so
+  // migrations connect directly (same URL without the -pooler suffix).
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 enum ExperienceSection {

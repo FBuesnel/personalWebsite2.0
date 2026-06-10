@@ -39,6 +39,7 @@ export async function savePost(
     await prisma.post.create({ data });
   }
 
+  revalidatePath('/');
   revalidatePath('/posts');
   revalidatePath(`/posts/${slug}`);
   if (oldSlug && oldSlug !== slug) revalidatePath(`/posts/${oldSlug}`);
@@ -52,6 +53,7 @@ export async function deletePost(formData: FormData) {
   const id = String(formData.get('id') ?? '');
   if (!id) return;
   const post = await prisma.post.delete({ where: { id } });
+  revalidatePath('/');
   revalidatePath('/posts');
   revalidatePath(`/posts/${post.slug}`);
   revalidatePath('/sitemap.xml');
