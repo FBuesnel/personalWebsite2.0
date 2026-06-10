@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { prisma } from "../../../lib/db";
+import { formatPostDate, readMinutes, KIND_LABELS } from "../../../lib/posts-format";
 import PostClient from "../../../components/pages/PostClient";
 
 interface PostPageProps {
@@ -29,7 +30,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       title: post.title,
       description: post.quote,
       url: `/posts/${post.slug}`,
-      images: ["/og-image.jpg"],
+      images: [post.coverImage ?? "/og-image.jpg"],
     },
   };
 }
@@ -38,5 +39,18 @@ export default async function PostPage({ params }: PostPageProps) {
   const { id } = await params;
   const post = await prisma.post.findUnique({ where: { slug: id } });
   if (!post || !post.published) notFound();
-  return <PostClient text={post.content} />;
+
+  return (
+    <PostClient
+      post={{
+        title: post.title,
+        kindLabel: KIND_LABELS[post.kind],
+        dateLabel: formatPostDate(post.publishedAt),
+        readMins: readMinutes(post.content),
+        showReadTime: post.kind !== "POEM",
+        coverImage: post.coverImage,
+        content: post.content,
+      }}
+    />
+  );
 }

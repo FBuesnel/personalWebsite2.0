@@ -1,0 +1,7 @@
+-- CreateEnum
+CREATE TYPE "PostKind" AS ENUM ('STORY', 'POEM', 'ESSAY');
+
+-- AlterTable
+ALTER TABLE "Post" ADD COLUMN     "coverImage" TEXT,
+ADD COLUMN     "kind" "PostKind" NOT NULL DEFAULT 'ESSAY',
+ADD COLUMN     "publishedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

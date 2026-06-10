@@ -2,6 +2,8 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { put } from '@vercel/blob';
+import { PostKind } from '@prisma/client';
 import { prisma } from '../../../lib/db';
 import { requireAdmin } from '../../../lib/admin';
 
@@ -16,6 +18,17 @@ export async function savePost(
   const quote = String(formData.get('quote') ?? '').trim();
   const content = String(formData.get('content') ?? '');
   const published = formData.get('published') === 'on';
+  const kindRaw = String(formData.get('kind') ?? '');
+  const kind = (Object.values(PostKind) as string[]).includes(kindRaw)
+    ? (kindRaw as PostKind)
+    : PostKind.ESSAY;
+  const coverImageRaw = String(formData.get('coverImage') ?? '').trim();
+  const coverImage = coverImageRaw || null;
+  // Stored at UTC noon so the calendar day never shifts with timezones
+  const publishedAtRaw = String(formData.get('publishedAt') ?? '').trim();
+  const publishedAt = /^\d{4}-\d{2}-\d{2}$/.test(publishedAtRaw)
+    ? new Date(`${publishedAtRaw}T12:00:00Z`)
+    : undefined;
 
   if (!/^[a-z0-9-]+$/.test(slug)) {
     return 'Slug must be lowercase letters, numbers, and hyphens only.';
@@ -29,7 +42,16 @@ export async function savePost(
     return `Slug "${slug}" is already used by another post.`;
   }
 
-  const data = { slug, title, quote, content, published };
+  const data = {
+    slug,
+    title,
+    quote,
+    content,
+    published,
+    kind,
+    coverImage,
+    ...(publishedAt ? { publishedAt } : {}),
+  };
   let oldSlug: string | undefined;
   if (id) {
     const current = await prisma.post.findUnique({ where: { id } });
@@ -46,6 +68,32 @@ export async function savePost(
   revalidatePath('/sitemap.xml');
   revalidatePath('/admin/posts');
   redirect('/admin/posts');
+}
+
+export async function uploadPostImage(
+  prevState: string | undefined,
+  formData: FormData
+): Promise<string | undefined> {
+  await requireAdmin();
+
+  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    return 'BLOB_READ_WRITE_TOKEN is not set - connect the Blob store in Vercel.';
+  }
+
+  const file = formData.get('file');
+  if (!(file instanceof File) || file.size === 0) {
+    return 'Choose an image file.';
+  }
+  if (!file.type.startsWith('image/')) {
+    return 'The file must be an image.';
+  }
+
+  const safeName = file.name.toLowerCase().replace(/[^a-z0-9.-]+/g, '-');
+  const blob = await put(`posts/${Date.now()}-${safeName}`, file, {
+    access: 'public',
+    contentType: file.type,
+  });
+  return blob.url;
 }
 
 export async function deletePost(formData: FormData) {
