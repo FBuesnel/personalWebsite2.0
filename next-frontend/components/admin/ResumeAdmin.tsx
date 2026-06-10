@@ -1,28 +1,45 @@
 'use client';
 
 import { useActionState } from 'react';
+import styled from 'styled-components';
 import { AdminCard, AdminForm, Input, Button, Label, Notice } from './AdminStyles';
 import { uploadResume } from '../../app/admin/resume/actions';
+
+const ResumeLink = styled.a`
+  color: ${({ theme }) => theme.accent};
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const CurrentLine = styled.p`
+  margin-bottom: 1rem;
+  color: ${({ theme }) => theme.secondaryText};
+`;
 
 const ResumeAdmin = ({ currentUrl }: { currentUrl: string | null }) => {
   const [message, formAction, pending] = useActionState(uploadResume, undefined);
 
   return (
     <AdminCard>
-      <p style={{ marginBottom: '1rem' }}>
-        Current resume:{' '}
-        <a href="/resume" target="_blank" rel="noopener noreferrer">
+      <CurrentLine>
+        Current:{' '}
+        <ResumeLink href="/resume" target="_blank" rel="noopener noreferrer">
           /resume
-        </a>{' '}
-        {currentUrl ? '(uploaded file)' : '(static fallback bundled with the site)'}
-      </p>
+        </ResumeLink>
+        {currentUrl ? ' (uploaded)' : ' (static fallback)'}
+      </CurrentLine>
       <AdminForm action={formAction}>
         <Label>
           New resume (PDF)
           <Input type="file" name="file" accept="application/pdf" required />
         </Label>
         <Button type="submit" disabled={pending}>
-          {pending ? 'Uploading...' : 'Upload Resume'}
+          {pending ? 'Uploading...' : 'Upload'}
         </Button>
         {message && <Notice>{message}</Notice>}
       </AdminForm>

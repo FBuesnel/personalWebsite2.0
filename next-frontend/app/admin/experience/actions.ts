@@ -19,7 +19,6 @@ function parseEntry(formData: FormData) {
       formData.get('section') === 'EDUCATION'
         ? ExperienceSection.EDUCATION
         : ExperienceSection.EXPERIENCE,
-    sortOrder: Number(formData.get('sortOrder') ?? 0),
     published: formData.get('published') === 'on',
   };
 }
@@ -33,8 +32,38 @@ export async function saveExperience(formData: FormData) {
   if (id) {
     await prisma.experienceEntry.update({ where: { id }, data });
   } else {
-    await prisma.experienceEntry.create({ data });
+    // New entries go to the end of their section; drag to reposition.
+    const last = await prisma.experienceEntry.findFirst({
+      where: { section: data.section },
+      orderBy: { sortOrder: 'desc' },
+    });
+    await prisma.experienceEntry.create({
+      data: { ...data, sortOrder: (last?.sortOrder ?? -1) + 1 },
+    });
   }
+  revalidatePath('/experience');
+  revalidatePath('/admin/experience');
+}
+
+export async function reorderExperience(ids: string[]) {
+  await requireAdmin();
+  await prisma.$transaction(
+    ids.map((id, index) =>
+      prisma.experienceEntry.update({ where: { id }, data: { sortOrder: index } })
+    )
+  );
+  revalidatePath('/experience');
+  revalidatePath('/admin/experience');
+}
+
+export async function toggleExperiencePublished(id: string) {
+  await requireAdmin();
+  const entry = await prisma.experienceEntry.findUnique({ where: { id } });
+  if (!entry) return;
+  await prisma.experienceEntry.update({
+    where: { id },
+    data: { published: !entry.published },
+  });
   revalidatePath('/experience');
   revalidatePath('/admin/experience');
 }

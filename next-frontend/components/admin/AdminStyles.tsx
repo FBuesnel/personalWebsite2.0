@@ -124,6 +124,25 @@ export const Collapsible = styled.details`
     font-weight: bold;
     color: ${({ theme }) => theme.text};
     font-size: 1.1rem;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::before {
+      content: '▸';
+      color: ${({ theme }) => theme.accent};
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  &[open] summary::before {
+    transform: rotate(90deg);
   }
 
   form {

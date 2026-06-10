@@ -14,7 +14,6 @@ function parseProject(formData: FormData) {
     imageUrl: String(formData.get('imageUrl') ?? '').trim(),
     githubUrl: githubUrl || null,
     websiteUrl: websiteUrl || null,
-    sortOrder: Number(formData.get('sortOrder') ?? 0),
     published: formData.get('published') === 'on',
   };
 }
@@ -28,8 +27,37 @@ export async function savePortfolioProject(formData: FormData) {
   if (id) {
     await prisma.portfolioProject.update({ where: { id }, data });
   } else {
-    await prisma.portfolioProject.create({ data });
+    // New projects go to the end; drag to reposition.
+    const last = await prisma.portfolioProject.findFirst({
+      orderBy: { sortOrder: 'desc' },
+    });
+    await prisma.portfolioProject.create({
+      data: { ...data, sortOrder: (last?.sortOrder ?? -1) + 1 },
+    });
   }
+  revalidatePath('/portfolio');
+  revalidatePath('/admin/portfolio');
+}
+
+export async function reorderPortfolio(ids: string[]) {
+  await requireAdmin();
+  await prisma.$transaction(
+    ids.map((id, index) =>
+      prisma.portfolioProject.update({ where: { id }, data: { sortOrder: index } })
+    )
+  );
+  revalidatePath('/portfolio');
+  revalidatePath('/admin/portfolio');
+}
+
+export async function togglePortfolioPublished(id: string) {
+  await requireAdmin();
+  const project = await prisma.portfolioProject.findUnique({ where: { id } });
+  if (!project) return;
+  await prisma.portfolioProject.update({
+    where: { id },
+    data: { published: !project.published },
+  });
   revalidatePath('/portfolio');
   revalidatePath('/admin/portfolio');
 }

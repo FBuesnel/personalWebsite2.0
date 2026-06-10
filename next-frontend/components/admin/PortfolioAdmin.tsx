@@ -1,7 +1,11 @@
 'use client';
 
-import { AdminCard, AdminForm, Input, TextArea, Button, DangerButton, InlineRow, Label, Collapsible, SectionTitle } from './AdminStyles';
-import { savePortfolioProject, deletePortfolioProject } from '../../app/admin/portfolio/actions';
+import { useEffect, useState, useTransition } from 'react';
+import styled from 'styled-components';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
+import SortableList from './SortableList';
+import { AdminForm, Input, TextArea, Button, DangerButton, InlineRow, Label, Collapsible } from './AdminStyles';
+import { savePortfolioProject, deletePortfolioProject, reorderPortfolio, togglePortfolioPublished } from '../../app/admin/portfolio/actions';
 
 export interface PortfolioAdminProject {
   id: string;
@@ -11,9 +15,71 @@ export interface PortfolioAdminProject {
   imageUrl: string;
   githubUrl: string | null;
   websiteUrl: string | null;
-  sortOrder: number;
   published: boolean;
 }
+
+const ItemHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const ItemTitle = styled.span<{ $hidden: boolean }>`
+  font-weight: bold;
+  color: ${({ theme }) => theme.text};
+  opacity: ${({ $hidden }) => ($hidden ? 0.45 : 1)};
+`;
+
+const EyeButton = styled.button`
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.15rem;
+  color: ${({ theme }) => theme.secondaryText};
+  transition: color 0.3s;
+
+  &:hover {
+    color: ${({ theme }) => theme.accent};
+  }
+`;
+
+const EditDetails = styled.details`
+  margin-top: 0.35rem;
+
+  summary {
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: ${({ theme }) => theme.secondaryText};
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::before {
+      content: '▸';
+      color: ${({ theme }) => theme.accent};
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      color: ${({ theme }) => theme.accent};
+    }
+  }
+
+  &[open] summary::before {
+    transform: rotate(90deg);
+  }
+
+  form {
+    margin-top: 0.75rem;
+  }
+`;
 
 const ProjectFields = ({ project }: { project?: PortfolioAdminProject }) => (
   <>
@@ -33,8 +99,8 @@ const ProjectFields = ({ project }: { project?: PortfolioAdminProject }) => (
       <TextArea name="description" rows={4} defaultValue={project?.description} required />
     </Label>
     <Label>
-      Image URL (e.g. /images/portfolio/lumina.jpg)
-      <Input name="imageUrl" defaultValue={project?.imageUrl} />
+      Image URL
+      <Input name="imageUrl" defaultValue={project?.imageUrl} placeholder="/images/portfolio/..." />
     </Label>
     <InlineRow>
       <Label>
@@ -47,49 +113,75 @@ const ProjectFields = ({ project }: { project?: PortfolioAdminProject }) => (
       </Label>
     </InlineRow>
     <InlineRow>
-      <Label>
-        Sort order
-        <Input type="number" name="sortOrder" defaultValue={project?.sortOrder ?? 0} />
-      </Label>
       <Label style={{ flexDirection: 'row', alignItems: 'center', gap: '0.4rem' }}>
         <input type="checkbox" name="published" defaultChecked={project?.published ?? true} /> Published
       </Label>
+      <Button type="submit">Save</Button>
     </InlineRow>
-    <Button type="submit">Save</Button>
   </>
 );
 
 const PortfolioAdmin = ({ projects }: { projects: PortfolioAdminProject[] }) => {
+  const [items, setItems] = useState(projects);
+  const [, startTransition] = useTransition();
+
+  useEffect(() => setItems(projects), [projects]);
+
+  const handleReorder = (next: PortfolioAdminProject[]) => {
+    setItems(next);
+    startTransition(() => reorderPortfolio(next.map(item => item.id)));
+  };
+
+  const handleToggle = (id: string) => {
+    setItems(prev =>
+      prev.map(item => (item.id === id ? { ...item, published: !item.published } : item))
+    );
+    startTransition(() => togglePortfolioPublished(id));
+  };
+
   return (
     <>
-      <SectionTitle>Add new project</SectionTitle>
-      <AdminCard>
+      <Collapsible>
+        <summary>Add new project</summary>
         <AdminForm action={savePortfolioProject}>
           <ProjectFields />
         </AdminForm>
-      </AdminCard>
-      <SectionTitle>Existing projects (ordered by sort order)</SectionTitle>
-      {projects.map(project => (
-        <Collapsible key={project.id}>
-          <summary>
-            [{project.sortOrder}] {project.title}
-            {project.published ? '' : ' (hidden)'}
-          </summary>
-          <AdminForm action={savePortfolioProject}>
-            <ProjectFields project={project} />
-          </AdminForm>
-          <form
-            action={deletePortfolioProject}
-            onSubmit={e => {
-              if (!confirm(`Delete "${project.title}"?`)) e.preventDefault();
-            }}
-            style={{ marginTop: '0.75rem' }}
-          >
-            <input type="hidden" name="id" value={project.id} />
-            <DangerButton type="submit">Delete</DangerButton>
-          </form>
-        </Collapsible>
-      ))}
+      </Collapsible>
+      <div style={{ marginTop: '1.5rem' }}>
+        <SortableList
+          items={items}
+          onReorder={handleReorder}
+          renderItem={project => (
+            <>
+              <ItemHeader>
+                <ItemTitle $hidden={!project.published}>{project.title}</ItemTitle>
+                <EyeButton
+                  onClick={() => handleToggle(project.id)}
+                  title={project.published ? 'Hide from site' : 'Show on site'}
+                >
+                  {project.published ? <FaRegEye /> : <FaRegEyeSlash />}
+                </EyeButton>
+              </ItemHeader>
+              <EditDetails>
+                <summary>Edit</summary>
+                <AdminForm action={savePortfolioProject}>
+                  <ProjectFields project={project} />
+                </AdminForm>
+                <form
+                  action={deletePortfolioProject}
+                  onSubmit={e => {
+                    if (!confirm(`Delete "${project.title}"?`)) e.preventDefault();
+                  }}
+                  style={{ marginTop: '0.75rem' }}
+                >
+                  <input type="hidden" name="id" value={project.id} />
+                  <DangerButton type="submit">Delete</DangerButton>
+                </form>
+              </EditDetails>
+            </>
+          )}
+        />
+      </div>
     </>
   );
 };

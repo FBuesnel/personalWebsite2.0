@@ -10,6 +10,28 @@ body {
   font-family: var(--font-baskerville), serif;
 }
 
+/* Design tokens: one place for type and spacing scales, mirrored into the
+   styled-components theme in lib/theme.ts. */
+:root {
+  --font-size-xs: 0.8rem;
+  --font-size-sm: 0.9rem;
+  --font-size-base: 1rem;
+  --font-size-md: 1.1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+
+  --space-1: 0.25em;
+  --space-2: 0.5em;
+  --space-3: 0.75em;
+  --space-4: 1em;
+  --space-5: 1.5em;
+  --space-6: 2em;
+  --space-8: 3em;
+  --space-12: 4.5em;
+}
+
 /* Theme palettes. html[data-theme] is set before first paint by the inline
    script in app/layout.tsx, so there is no flash for either preference. */
 html[data-theme='dark'] {

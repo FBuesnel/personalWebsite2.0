@@ -8,6 +8,7 @@ const Panel = styled.div`
   border-radius: 10px;
   background-color: ${({ theme }) => theme.secondaryBackground};
   padding: 1rem;
+  height: 100%;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   &:hover {
     box-shadow: 0 4px 20px ${({ theme }) => theme.shadow};

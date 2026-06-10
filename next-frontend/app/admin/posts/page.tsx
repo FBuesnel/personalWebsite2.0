@@ -1,5 +1,5 @@
 import { prisma } from "../../../lib/db";
-import { Container, Header, Description } from "../../../components/GlobalStyles";
+import { Container, Header } from "../../../components/GlobalStyles";
 import PostsAdminList from "../../../components/admin/PostsAdminList";
 
 export const dynamic = "force-dynamic";
@@ -11,10 +11,7 @@ export default async function PostsAdminPage() {
   });
   return (
     <Container>
-      <Header>Edit Posts</Header>
-      <Description>
-        Write and publish without redeploying. Unpublished posts are hidden from the site.
-      </Description>
+      <Header>Posts</Header>
       <PostsAdminList posts={posts} />
     </Container>
   );

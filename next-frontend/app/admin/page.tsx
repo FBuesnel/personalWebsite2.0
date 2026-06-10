@@ -25,7 +25,7 @@ export default async function AdminDashboard() {
     <Container>
       <Header>Dashboard</Header>
       <Description>
-        {today} — {doneToday}/{habitData.length} habits done today. Click a cell to toggle it.
+        {today} — {doneToday}/{habitData.length} habits done today
       </Description>
       <HabitGrid habits={habitData} days={days} />
     </Container>

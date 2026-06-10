@@ -1,5 +1,5 @@
 import { prisma } from "../../../lib/db";
-import { Container, Header, Description } from "../../../components/GlobalStyles";
+import { Container, Header } from "../../../components/GlobalStyles";
 import PortfolioAdmin from "../../../components/admin/PortfolioAdmin";
 
 export const dynamic = "force-dynamic";
@@ -10,10 +10,7 @@ export default async function PortfolioAdminPage() {
   });
   return (
     <Container>
-      <Header>Edit Portfolio</Header>
-      <Description>
-        Changes go live on /portfolio as soon as you save — no redeploy needed.
-      </Description>
+      <Header>Portfolio</Header>
       <PortfolioAdmin projects={projects} />
     </Container>
   );

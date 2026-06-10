@@ -154,10 +154,9 @@ const publicLinks = [
 
 const adminLinks = [
   { href: '/admin', label: 'Dashboard' },
-  { href: '/admin/experience', label: 'Experience' },
+  { href: '/admin/experience', label: 'Jobs' },
   { href: '/admin/portfolio', label: 'Portfolio' },
   { href: '/admin/posts', label: 'Posts' },
-  { href: '/admin/resume', label: 'Resume' },
   { href: '/admin/habits', label: 'Habits' },
 ];
 

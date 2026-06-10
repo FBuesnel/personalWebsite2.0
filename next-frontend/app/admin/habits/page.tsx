@@ -1,6 +1,6 @@
 import { prisma } from "../../../lib/db";
 import { ptLastNDays } from "../../../lib/dates";
-import { Container, Header, Description } from "../../../components/GlobalStyles";
+import { Container, Header } from "../../../components/GlobalStyles";
 import HabitGrid from "../../../components/admin/HabitGrid";
 import HabitsManager from "../../../components/admin/HabitsManager";
 
@@ -24,10 +24,10 @@ export default async function HabitsAdminPage() {
   return (
     <Container>
       <Header>Habits</Header>
-      <Description>Last two weeks. Click a cell to toggle a day.</Description>
-      <HabitGrid habits={activeHabits} days={days} />
-      <Header style={{ fontSize: "1.8rem", marginTop: "2rem" }}>Manage</Header>
-      <Description>Inactive habits keep their history but leave the grid.</Description>
+      <div style={{ marginTop: "1.5rem" }}>
+        <HabitGrid habits={activeHabits} days={days} />
+      </div>
+      <Header style={{ fontSize: "1.8rem", marginTop: "2.5rem", marginBottom: "1rem" }}>Manage</Header>
       <HabitsManager habits={habits.map(({ id, name, active }) => ({ id, name, active }))} />
     </Container>
   );
