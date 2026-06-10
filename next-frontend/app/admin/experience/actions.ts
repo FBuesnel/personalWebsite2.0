@@ -6,10 +6,12 @@ import { prisma } from '../../../lib/db';
 import { requireAdmin } from '../../../lib/admin';
 
 function parseEntry(formData: FormData) {
+  const companyUrl = String(formData.get('companyUrl') ?? '').trim();
   return {
     title: String(formData.get('title') ?? '').trim(),
     subtitle: String(formData.get('subtitle') ?? '').trim(),
     imageUrl: String(formData.get('imageUrl') ?? '').trim(),
+    companyUrl: companyUrl || null,
     // One bullet per line in the textarea
     bullets: String(formData.get('bullets') ?? '')
       .split('\n')

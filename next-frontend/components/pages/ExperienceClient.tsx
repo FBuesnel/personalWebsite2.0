@@ -6,7 +6,7 @@ import ExperiencePanel from '../ExperiencePanel';
 import { Container, Header } from '../GlobalStyles';
 
 // Older roles are tucked away so education isn't buried under juice bars.
-const VISIBLE_COUNT = 8;
+const VISIBLE_COUNT = 6;
 
 export interface ExperienceEntryData {
   id: string;
@@ -14,6 +14,7 @@ export interface ExperienceEntryData {
   subtitle: string;
   bullets: string[];
   imageUrl: string;
+  companyUrl: string | null;
 }
 
 const GridContainer = styled.div`
@@ -122,6 +123,20 @@ const CardSubtitle = styled.p`
   margin: 0 0 ${({ theme }) => theme.space[3]} 0;
 `;
 
+const CardSubtitleLink = styled.a`
+  display: inline-block;
+  font-size: ${({ theme }) => theme.fontSize.base};
+  color: ${({ theme }) => theme.secondaryText};
+  margin: 0 0 ${({ theme }) => theme.space[3]} 0;
+  text-decoration: none;
+  transition: color 0.3s;
+
+  &:hover {
+    color: ${({ theme }) => theme.accent};
+    text-decoration: underline;
+  }
+`;
+
 const CardBullets = styled.ul`
   padding-left: ${({ theme }) => theme.space[5]};
   list-style-type: disc;
@@ -174,7 +189,13 @@ const ExperienceClient = ({ experience, education }: ExperienceClientProps) => {
               <TimelineNode $side={side} src={entry.imageUrl} alt="" />
               <TimelineCard>
                 <CardTitle>{entry.title}</CardTitle>
-                <CardSubtitle>{entry.subtitle}</CardSubtitle>
+                {entry.companyUrl ? (
+                  <CardSubtitleLink href={entry.companyUrl} target="_blank" rel="noopener noreferrer">
+                    {entry.subtitle}
+                  </CardSubtitleLink>
+                ) : (
+                  <CardSubtitle>{entry.subtitle}</CardSubtitle>
+                )}
                 <CardBullets>
                   {entry.bullets.map((bullet, j) => (
                     <li key={j}>{bullet}</li>
@@ -198,6 +219,7 @@ const ExperienceClient = ({ experience, education }: ExperienceClientProps) => {
             imgSrc={entry.imageUrl}
             title={entry.title}
             subtitle={entry.subtitle}
+            subtitleUrl={entry.companyUrl ?? undefined}
             description={entry.bullets}
           />
         ))}

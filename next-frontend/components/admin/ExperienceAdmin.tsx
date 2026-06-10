@@ -14,6 +14,7 @@ export interface ExperienceAdminEntry {
   subtitle: string;
   bullets: string[];
   imageUrl: string;
+  companyUrl: string | null;
   published: boolean;
 }
 
@@ -98,10 +99,16 @@ const EntryFields = ({ entry }: { entry?: ExperienceAdminEntry }) => (
         <Input name="subtitle" defaultValue={entry?.subtitle} required size={40} />
       </Label>
     </InlineRow>
-    <Label>
-      Image URL
-      <Input name="imageUrl" defaultValue={entry?.imageUrl} placeholder="/images/experience/..." />
-    </Label>
+    <InlineRow>
+      <Label>
+        Image URL
+        <Input name="imageUrl" defaultValue={entry?.imageUrl} placeholder="/images/experience/..." size={30} />
+      </Label>
+      <Label>
+        Company URL (optional)
+        <Input name="companyUrl" defaultValue={entry?.companyUrl ?? ''} placeholder="https://..." size={30} />
+      </Label>
+    </InlineRow>
     <Label>
       Bullets (one per line)
       <TextArea name="bullets" rows={5} defaultValue={entry?.bullets.join('\n')} />

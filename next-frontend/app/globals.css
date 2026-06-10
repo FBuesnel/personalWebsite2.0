@@ -54,6 +54,13 @@ html[data-theme='light'] {
   --shadow: rgba(0, 0, 0, 0.25);
 }
 
+/* Background on <html> too: iOS Safari shows the html background in the
+   overscroll rubber-band areas and behind the toolbar safe areas - without
+   this they render as white bands above and below a dark page. */
+html {
+  background: var(--background);
+}
+
 body {
   background: var(--background);
   color: var(--text);

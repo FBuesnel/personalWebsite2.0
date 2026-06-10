@@ -42,6 +42,20 @@ const Subtitle = styled.p`
   margin: 0;
 `;
 
+const SubtitleLink = styled.a`
+  display: inline-block;
+  font-size: 1rem;
+  color: ${({ theme }) => theme.secondaryText};
+  margin: 0;
+  text-decoration: none;
+  transition: color 0.3s;
+
+  &:hover {
+    color: ${({ theme }) => theme.accent};
+    text-decoration: underline;
+  }
+`;
+
 const Description = styled.ul`
   margin-top: 1rem;
   padding-left: 1.5rem;
@@ -58,17 +72,24 @@ interface ExperiencePanelProps {
   imgSrc: string;
   title: string;
   subtitle: string;
+  subtitleUrl?: string;
   description: string[];
 }
 
-const ExperiencePanel: React.FC<ExperiencePanelProps> = ({ imgSrc, title, subtitle, description }) => {
+const ExperiencePanel: React.FC<ExperiencePanelProps> = ({ imgSrc, title, subtitle, subtitleUrl, description }) => {
   return (
     <Panel>
       <Header>
         <Image src={imgSrc} alt={title} />
         <div>
           <Title>{title}</Title>
-          <Subtitle>{subtitle}</Subtitle>
+          {subtitleUrl ? (
+            <SubtitleLink href={subtitleUrl} target="_blank" rel="noopener noreferrer">
+              {subtitle}
+            </SubtitleLink>
+          ) : (
+            <Subtitle>{subtitle}</Subtitle>
+          )}
         </div>
       </Header>
       <Description>
