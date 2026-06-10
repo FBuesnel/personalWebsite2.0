@@ -14,7 +14,6 @@ const AppWrapper = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  transition: background-color 0.3s ease, color 0.3s ease;
 `;
 
 // Colors come from CSS variables keyed by html[data-theme] (set pre-paint in

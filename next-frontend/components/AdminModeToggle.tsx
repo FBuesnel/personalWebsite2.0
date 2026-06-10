@@ -16,7 +16,7 @@ const GearButton = styled.button<{ $inAdmin: boolean }>`
   background: ${({ theme }) => theme.secondaryBackground};
   cursor: pointer;
   overflow: hidden;
-  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease, background-color 0.3s ease;
   box-shadow: ${({ theme, $inAdmin }) =>
     $inAdmin ? `0 0 12px ${theme.accent}` : 'none'};
 
@@ -38,11 +38,10 @@ const GearButton = styled.button<{ $inAdmin: boolean }>`
     transform: rotate(${({ $inAdmin }) => ($inAdmin ? '450deg' : '90deg')});
   }
 
-  /* Sit on the hamburger's midline: the bars icon is 1.8rem (28.8px) tall,
-     offset 75% of its height from the top, so its center is at ~36px. */
+  /* Centered on the mobile bar's 32px midline, left of the hamburger */
   @media screen and (max-width: 768px) {
     right: 68px;
-    top: 17px;
+    top: 13px;
     width: 38px;
     height: 38px;
   }

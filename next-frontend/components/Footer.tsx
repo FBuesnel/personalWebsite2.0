@@ -28,7 +28,7 @@ const SocialIcon = styled.a`
   text-decoration: none;
   border-radius: 50%;
   margin: 5px;
-  transition: color 0.5s;
+  transition: color 0.3s ease;
 
   &:hover {
     color: ${({ theme }) => theme.accent};

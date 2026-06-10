@@ -9,7 +9,7 @@ const Panel = styled.div`
   background-color: ${({ theme }) => theme.secondaryBackground};
   padding: 1rem;
   height: 100%;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
   &:hover {
     box-shadow: 0 4px 20px ${({ theme }) => theme.shadow};
     transform: translateY(-3px);

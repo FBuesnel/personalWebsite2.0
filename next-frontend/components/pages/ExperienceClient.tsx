@@ -102,7 +102,7 @@ const TimelineCard = styled.div`
   border: 4px solid ${({ theme }) => theme.border};
   border-radius: 10px;
   padding: ${({ theme }) => theme.space[4]};
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 
   &:hover {
     box-shadow: 0 4px 20px ${({ theme }) => theme.shadow};

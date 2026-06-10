@@ -11,13 +11,23 @@ import AdminModeToggle from "./AdminModeToggle";
 import { logout } from "../app/admin/actions";
 
 const Nav = styled.nav`
-	background: ${({ theme }) => theme.background};
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background: color-mix(in srgb, ${({ theme }) => theme.background} 82%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 	padding: 1rem 0 1rem 0;
 	display: flex;
   text-align: center;
   align-items: center;
-  position: relative;
   justify-content: center;
+
+  /* On mobile the menu is a fixed drawer and the icons are absolutely
+     positioned, so nothing in flow gives the bar height - set it directly. */
+  @media screen and (max-width: 768px) {
+    min-height: 64px;
+  }
 `
 
 const NavMenu = styled.ul<{ $isOpen: boolean }>`
@@ -35,7 +45,7 @@ const NavMenu = styled.ul<{ $isOpen: boolean }>`
     background: ${({ theme }) => theme.background};
     z-index: 10;
     padding: 20px 0;
-    transition: transform 0.5s;
+    transition: transform 0.5s, background-color 0.3s ease;
     transform: translateY(${({ $isOpen }) => ($isOpen ? '0' : '-110%')});
   }
 `
@@ -87,9 +97,9 @@ export const Bars = styled(FaBars)`
   @media screen and (max-width: 768px) {
     display: block;
     position: absolute;
-    top: 0;
-    right: 0;
-    transform: translate(-100%, 75%);
+    /* Centered on the 64px bar's midline (icon is 1.8rem ≈ 29px) */
+    top: 18px;
+    right: 20px;
     font-size: 1.8rem;
     cursor: pointer;
   }
@@ -117,7 +127,10 @@ const Overlay = styled.div<{ $isOpen: boolean }>`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 5;
+  /* Must stay below the Nav's z-index: the sticky nav is a stacking context,
+     so the drawer inside it can never rise above this overlay - the overlay
+     has to sit under the whole nav layer or it eats the drawer's clicks. */
+  z-index: 3;
   @media screen and (min-width: 769px) {
     display: none;
   }

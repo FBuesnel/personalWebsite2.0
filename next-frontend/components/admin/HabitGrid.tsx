@@ -29,7 +29,7 @@ const Cell = styled.button<{ $done: boolean; $today: boolean }>`
   border: 2px solid ${({ theme, $today }) => ($today ? theme.accent : theme.border)};
   background: ${({ theme, $done }) => ($done ? theme.accent : theme.background)};
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 
   &:hover {
     border-color: ${({ theme }) => theme.accent};

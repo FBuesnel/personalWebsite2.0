@@ -15,7 +15,7 @@ const Panel = styled.div`
   overflow: hidden;
   text-align: center;
   // Add a hover shadow
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
   &:hover {
     box-shadow: 0 4px 20px ${({ theme }) => theme.shadow};
     transform: translateY(-3px);
