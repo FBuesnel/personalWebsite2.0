@@ -2,8 +2,13 @@
 
 import styled from 'styled-components';
 import Link from 'next/link';
-import { posts } from '../../lib/posts-data';
 import { Container, Header, Description } from '../GlobalStyles';
+
+export interface PostListItem {
+  slug: string;
+  title: string;
+  quote: string;
+}
 
 const LinkContainer = styled.div`
   margin-bottom: 2em;
@@ -34,14 +39,14 @@ const StyledContainer = styled(Container)`
   min-height: 80vh;
 `;
 
-const PostsClient = () => {
+const PostsClient = ({ posts }: { posts: PostListItem[] }) => {
   return (
     <StyledContainer>
       <Header>Posts</Header>
       <Description>Here I post lots of different things. This includes stories, poetry, and my thoughts on various things I enjoy. If you have any feedback, feel free to send me a message.</Description>
       {posts.map(post => (
-        <LinkContainer key={post.id}>
-          <StyledLink href={`/posts/${post.id}`}>{post.title}</StyledLink>
+        <LinkContainer key={post.slug}>
+          <StyledLink href={`/posts/${post.slug}`}>{post.title}</StyledLink>
           <StyledBlockquote>
               {post.quote}
           </StyledBlockquote>

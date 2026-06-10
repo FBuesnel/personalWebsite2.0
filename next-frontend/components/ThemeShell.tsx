@@ -5,6 +5,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme } from '../lib/theme';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import SecretLogin from './SecretLogin';
 
 const AppWrapper = styled.div`
   background-color: ${({ theme }) => theme.background};
@@ -33,6 +34,7 @@ const ThemeShell = ({ children }: { children: React.ReactNode }) => {
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <AppWrapper>
+        <SecretLogin />
         <Navbar toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
         {children}
         <Footer />

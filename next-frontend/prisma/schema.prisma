@@ -1,0 +1,79 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ExperienceSection {
+  EXPERIENCE
+  EDUCATION
+}
+
+model ExperienceEntry {
+  id        String            @id @default(cuid())
+  section   ExperienceSection @default(EXPERIENCE)
+  title     String
+  subtitle  String
+  bullets   String[]
+  imageUrl  String
+  sortOrder Int               @default(0)
+  published Boolean           @default(true)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
+
+model PortfolioProject {
+  id          String   @id @default(cuid())
+  title       String
+  subtitle    String
+  description String
+  imageUrl    String
+  githubUrl   String?
+  websiteUrl  String?
+  sortOrder   Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  quote     String
+  content   String
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Habit {
+  id        String     @id @default(cuid())
+  name      String
+  active    Boolean    @default(true)
+  sortOrder Int        @default(0)
+  createdAt DateTime   @default(now())
+  logs      HabitLog[]
+}
+
+model HabitLog {
+  id      String  @id @default(cuid())
+  habitId String
+  habit   Habit   @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  // YYYY-MM-DD in America/Los_Angeles - stored as a string so the server's
+  // UTC runtime can never shift the day (same convention as LUMINA).
+  date    String
+  done    Boolean @default(true)
+
+  @@unique([habitId, date])
+}
+
+model SiteSetting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
