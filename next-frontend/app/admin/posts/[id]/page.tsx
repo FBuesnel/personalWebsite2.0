@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "../../../../lib/db";
 import { Container, Header } from "../../../../components/GlobalStyles";
+import { BackLink } from "../../../../components/admin/AdminStyles";
 import PostEditor from "../../../../components/admin/PostEditor";
 import PostImageUploader from "../../../../components/admin/PostImageUploader";
 
@@ -16,6 +17,7 @@ export default async function PostEditorPage({
   if (id === "new") {
     return (
       <Container>
+        <BackLink href="/admin/posts">← Posts</BackLink>
         <Header>New Post</Header>
         <PostEditor />
         <PostImageUploader />
@@ -28,6 +30,7 @@ export default async function PostEditorPage({
 
   return (
     <Container>
+      <BackLink href="/admin/posts">← Posts</BackLink>
       <Header>Edit Post</Header>
       <PostEditor
         post={{

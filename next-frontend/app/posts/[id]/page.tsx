@@ -22,6 +22,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   const { id } = await params;
   const post = await prisma.post.findUnique({ where: { slug: id } });
   if (!post || !post.published) return { title: "Post not found" };
+  const image = post.coverImage ?? "/og-image.jpg";
   return {
     title: post.title,
     description: post.quote,
@@ -30,14 +31,23 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       title: post.title,
       description: post.quote,
       url: `/posts/${post.slug}`,
-      images: [post.coverImage ?? "/og-image.jpg"],
+      images: [image],
+      publishedTime: post.publishedAt?.toISOString(),
+    },
+    twitter: {
+      card: post.coverImage ? "summary_large_image" : "summary",
+      title: post.title,
+      description: post.quote,
+      images: [image],
     },
   };
 }
 
 export default async function PostPage({ params }: PostPageProps) {
   const { id } = await params;
-  const post = await prisma.post.findUnique({ where: { slug: id } });
+  const post = await prisma.post.findUnique({
+    where: { slug: id },
+  });
   if (!post || !post.published) notFound();
 
   return (

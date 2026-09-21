@@ -6,7 +6,7 @@ const BASE = "https://www.fynnbuesnel.me";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await prisma.post.findMany({
     where: { published: true },
-    select: { slug: true },
+    select: { slug: true, publishedAt: true, updatedAt: true },
   });
   return [
     { url: `${BASE}/`, changeFrequency: "monthly", priority: 1 },
@@ -16,6 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/contact`, changeFrequency: "yearly", priority: 0.2 },
     ...posts.map(post => ({
       url: `${BASE}/posts/${post.slug}`,
+      lastModified: post.updatedAt ?? post.publishedAt ?? undefined,
       changeFrequency: "yearly" as const,
       priority: 0.3,
     })),

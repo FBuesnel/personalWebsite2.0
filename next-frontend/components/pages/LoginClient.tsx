@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import { useActionState } from 'react';
 import styled from 'styled-components';
 import { FaGoogle } from 'react-icons/fa';
 import { googleLogin } from '../../app/login/actions';
@@ -49,6 +49,11 @@ const GoogleButton = styled.button`
     background: ${({ theme }) => theme.accent};
     color: ${({ theme }) => theme.background};
   }
+
+  &:disabled {
+    cursor: wait;
+    opacity: 0.7;
+  }
 `;
 
 const Hint = styled.p`
@@ -56,20 +61,24 @@ const Hint = styled.p`
   color: ${({ theme }) => theme.secondaryText};
 `;
 
-const LoginClient = ({ hasGoogle }: { hasGoogle: boolean }) => {
+const LoginClient = ({ hasGoogle, error }: { hasGoogle: boolean; error?: string }) => {
+  const [actionError, formAction, pending] = useActionState(googleLogin, undefined);
+  const message = actionError ?? error;
+
   return (
     <StyledContainer>
       <FormWrapper>
         <StyledHeader>Welcome back.</StyledHeader>
         {hasGoogle ? (
-          <form action={googleLogin}>
-            <GoogleButton type="submit">
-              <FaGoogle /> Sign in with Google
+          <form action={formAction}>
+            <GoogleButton type="submit" disabled={pending}>
+              <FaGoogle /> {pending ? 'Connecting to Google...' : 'Sign in with Google'}
             </GoogleButton>
           </form>
         ) : (
           <Hint>Google sign-in is not configured.</Hint>
         )}
+        {message && <Hint role="alert">{message}</Hint>}
       </FormWrapper>
     </StyledContainer>
   );

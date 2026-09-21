@@ -1,0 +1,8 @@
+{
+  "env": {
+    "ZOLA_VERSION": "0.19.1"
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}

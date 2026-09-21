@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { googleEnabled } from "../../lib/auth";
+import { redirect } from "next/navigation";
+import { auth, googleEnabled } from "../../lib/auth";
+import { loginErrorMessage } from "../../lib/login-errors";
 import LoginClient from "../../components/pages/LoginClient";
 
 export const metadata: Metadata = {
@@ -7,6 +9,14 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function LoginPage() {
-  return <LoginClient hasGoogle={googleEnabled} />;
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const session = await auth();
+  if (session?.user) redirect("/admin/experience");
+
+  const { error } = await searchParams;
+  return <LoginClient hasGoogle={googleEnabled} error={loginErrorMessage(error)} />;
 }

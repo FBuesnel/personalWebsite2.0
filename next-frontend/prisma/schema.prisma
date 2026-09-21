@@ -48,6 +48,7 @@ enum PostKind {
   STORY
   POEM
   ESSAY
+  REVIEW
 }
 
 model Post {
@@ -59,30 +60,196 @@ model Post {
   kind        PostKind @default(ESSAY)
   publishedAt DateTime @default(now())
   coverImage  String?
+  // Legacy reading-tracker link; blog editing no longer requires a book.
+  bookId      String?
+  book        Book?    @relation(fields: [bookId], references: [id], onDelete: SetNull)
   published   Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
-model Habit {
-  id        String     @id @default(cuid())
-  name      String
-  active    Boolean    @default(true)
-  sortOrder Int        @default(0)
-  createdAt DateTime   @default(now())
-  logs      HabitLog[]
+// Retired tracker models are retained to preserve existing data and migration
+// history. No application routes or content editors query these tables.
+
+enum MetricCadence {
+  DAILY
+  WEEKLY
+  ADHOC
 }
 
-model HabitLog {
-  id      String  @id @default(cuid())
-  habitId String
-  habit   Habit   @relation(fields: [habitId], references: [id], onDelete: Cascade)
-  // YYYY-MM-DD in America/Los_Angeles - stored as a string so the server's
-  // UTC runtime can never shift the day (same convention as LUMINA).
-  date    String
-  done    Boolean @default(true)
+enum MetricDirection {
+  HIGHER
+  LOWER
+  NEUTRAL
+}
 
-  @@unique([habitId, date])
+enum MetricChart {
+  LINE
+  BAR
+  HEATMAP
+  STREAK
+}
+
+model Metric {
+  id          String          @id @default(cuid())
+  key         String          @unique // stable handle for quick-log + sync endpoints
+  name        String
+  description String?
+  unit        String // mi, min, bpm, pages, count, bool, hours...
+  cadence     MetricCadence   @default(DAILY)
+  direction   MetricDirection @default(NEUTRAL)
+  targetValue Float?
+  chartType   MetricChart     @default(LINE)
+  color       String?
+  group       String?
+  sortOrder   Int             @default(0)
+  archivedAt  DateTime?
+  createdAt   DateTime        @default(now())
+  entries     MetricEntry[]
+}
+
+model MetricEntry {
+  id         String   @id @default(cuid())
+  metricId   String
+  metric     Metric   @relation(fields: [metricId], references: [id], onDelete: Cascade)
+  value      Float
+  // YYYY-MM-DD in America/Los_Angeles (same convention as habit dates)
+  date       String
+  note       String?
+  source     String   @default("manual") // manual / strava / anki / shortcut
+  externalId String? // dedupe handle for synced data
+  createdAt  DateTime @default(now())
+
+  @@unique([metricId, externalId])
+  @@index([metricId, date])
+}
+
+enum GoalStatus {
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+}
+
+model Goal {
+  id              String      @id @default(cuid())
+  title           String
+  description     String?
+  targetDate      DateTime?
+  status          GoalStatus  @default(ACTIVE)
+  linkedMetricIds String[]
+  createdAt       DateTime    @default(now())
+  completedAt     DateTime?
+  milestones      Milestone[]
+}
+
+model Milestone {
+  id         String    @id @default(cuid())
+  goalId     String
+  goal       Goal      @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  title      String
+  targetDate DateTime?
+  done       Boolean   @default(false)
+  sortOrder  Int       @default(0)
+}
+
+model DashboardWidget {
+  key       String  @id
+  enabled   Boolean @default(true)
+  sortOrder Int     @default(0)
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  periodStart String // YYYY-MM-DD
+  periodEnd   String // YYYY-MM-DD
+  answers     Json
+  createdAt   DateTime @default(now())
+}
+
+model ReviewPrompt {
+  id         String    @id @default(cuid())
+  text       String
+  sortOrder  Int       @default(0)
+  archivedAt DateTime?
+}
+
+// --- Structured trackers: where generic metric numbers aren't enough ---
+
+enum RunType {
+  EASY
+  LONG
+  WORKOUT
+  RACE
+}
+
+model Run {
+  id            String   @id @default(cuid())
+  date          String // YYYY-MM-DD PT
+  distanceMi    Float
+  movingTimeSec Int
+  avgHR         Int?
+  type          RunType  @default(EASY)
+  note          String?
+  source        String   @default("manual") // manual / strava
+  externalId    String?  @unique // Strava activity id for dedupe
+  createdAt     DateTime @default(now())
+
+  @@index([date])
+}
+
+enum BookStatus {
+  QUEUE
+  READING
+  FINISHED
+}
+
+model Book {
+  id             String     @id @default(cuid())
+  title          String
+  author         String
+  totalPages     Int?
+  currentPage    Int        @default(0)
+  status         BookStatus @default(QUEUE)
+  startedAt      String? // YYYY-MM-DD
+  finishedAt     String? // YYYY-MM-DD
+  rating         Int? // 1-5
+  tags           String[] // includes "hard"
+  notes          String?
+  // From the Google Books API on create
+  googleBooksId  String?
+  googleBooksUrl String?
+  coverUrl       String?
+  createdAt      DateTime   @default(now())
+  reviews        Post[]
+}
+
+// Sets live in the Strong app; a lift here is just date + kind tag + note.
+model LiftSession {
+  id           String   @id @default(cuid())
+  date         String // YYYY-MM-DD PT
+  templateName String? // kind tag: Legs / Upper / Push / Pull / Full body / Other
+  note         String?
+  createdAt    DateTime @default(now())
+
+  @@index([date])
+}
+
+enum ImmersionCategory {
+  LISTENING
+  READING
+  SPEAKING
+  WRITING
+}
+
+model ImmersionEntry {
+  id        String            @id @default(cuid())
+  date      String // YYYY-MM-DD PT
+  category  ImmersionCategory
+  minutes   Int
+  note      String?
+  createdAt DateTime          @default(now())
+
+  @@index([date])
 }
 
 model SiteSetting {

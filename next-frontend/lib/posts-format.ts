@@ -20,6 +20,7 @@ export const KIND_LABELS = {
   STORY: 'Story',
   POEM: 'Poem',
   ESSAY: 'Essay',
+  REVIEW: 'Book review',
 } as const;
 
 export type PostKindLabel = keyof typeof KIND_LABELS;

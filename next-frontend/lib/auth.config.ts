@@ -1,10 +1,11 @@
 import type { NextAuthConfig } from 'next-auth';
 
 // Edge-safe config shared by proxy.ts (route protection) and lib/auth.ts.
-// No Node-only imports here (bcrypt lives in lib/auth.ts).
+// No Node-only imports here.
 export const authConfig = {
   pages: {
     signIn: '/login',
+    error: '/login',
   },
   session: {
     strategy: 'jwt',

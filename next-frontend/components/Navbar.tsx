@@ -166,11 +166,9 @@ const publicLinks = [
 ];
 
 const adminLinks = [
-  { href: '/admin', label: 'Dashboard' },
-  { href: '/admin/experience', label: 'Jobs' },
+  { href: '/admin/experience', label: 'Experience' },
   { href: '/admin/portfolio', label: 'Portfolio' },
   { href: '/admin/posts', label: 'Posts' },
-  { href: '/admin/habits', label: 'Habits' },
 ];
 
 interface INavbarProps {
@@ -184,7 +182,6 @@ const Navbar = ({ toggleTheme, isDarkMode }: INavbarProps) => {
 
     const inAdmin = pathname.startsWith('/admin');
     const links = inAdmin ? adminLinks : publicLinks;
-
     const toggleMenu = () => {
       setIsOpen(!isOpen);
     }
@@ -209,7 +206,7 @@ const Navbar = ({ toggleTheme, isDarkMode }: INavbarProps) => {
               key={link.href}
               href={link.href}
               className={isActive(link.href) ? 'active' : ''}
-              onClick={toggleMenu}
+              onClick={() => setIsOpen(false)}
             >
               {link.label}
             </NavLink>

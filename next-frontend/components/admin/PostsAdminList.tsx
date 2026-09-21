@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import styled from 'styled-components';
-import { AdminCard, DangerButton, InlineRow, Button } from './AdminStyles';
+import { AdminCard, InlineRow, Button } from './AdminStyles';
+import DeleteButton from './DeleteButton';
 import { deletePost } from '../../app/admin/posts/actions';
 
 const PostTitle = styled(Link)`
-  font-size: 1.2rem;
+  font-size: ${({ theme }) => theme.fontSize.md};
   font-weight: bold;
   color: ${({ theme }) => theme.text};
   text-decoration: none;
@@ -19,6 +20,10 @@ const Meta = styled.span`
   color: ${({ theme }) => theme.secondaryText};
 `;
 
+const NewBar = styled(InlineRow)`
+  margin-bottom: ${({ theme }) => theme.space[5]};
+`;
+
 export interface PostListAdminItem {
   id: string;
   slug: string;
@@ -29,29 +34,22 @@ export interface PostListAdminItem {
 const PostsAdminList = ({ posts }: { posts: PostListAdminItem[] }) => {
   return (
     <>
-      <InlineRow style={{ marginBottom: '1.5rem' }}>
+      <NewBar>
         <Button as={Link} href="/admin/posts/new">
           + New Post
         </Button>
-      </InlineRow>
+      </NewBar>
       {posts.map(post => (
         <AdminCard key={post.id}>
           <InlineRow>
-            <PostTitle href={`/admin/posts/${post.id}`}>{post.title}</PostTitle>
+            <PostTitle href={`/admin/posts/${post.id}`} title="Edit post">
+              {post.title}
+            </PostTitle>
             <Meta>
               /posts/{post.slug}
               {post.published ? '' : ' (hidden)'}
             </Meta>
-            <form
-              action={deletePost}
-              onSubmit={e => {
-                if (!confirm(`Delete "${post.title}"?`)) e.preventDefault();
-              }}
-              style={{ marginLeft: 'auto' }}
-            >
-              <input type="hidden" name="id" value={post.id} />
-              <DangerButton type="submit">Delete</DangerButton>
-            </form>
+            <DeleteButton action={deletePost} fields={{ id: post.id }} prompt={`Delete "${post.title}"?`} />
           </InlineRow>
         </AdminCard>
       ))}

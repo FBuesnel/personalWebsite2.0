@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useId } from 'react';
 import {
   DndContext,
   closestCenter,
@@ -21,30 +21,42 @@ import { MdDragIndicator } from 'react-icons/md';
 
 const Row = styled.div<{ $dragging: boolean }>`
   display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
+  align-items: center;
+  gap: ${({ theme }) => theme.space[2]};
   background: ${({ theme }) => theme.secondaryBackground};
   border: 2px solid ${({ theme }) => theme.border};
-  border-radius: 10px;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.75rem;
+  border-radius: ${({ theme }) => theme.radius.lg};
+  padding: ${({ theme }) => theme.space[3]} ${({ theme }) => theme.space[4]};
+  margin-bottom: ${({ theme }) => theme.space[3]};
   opacity: ${({ $dragging }) => ($dragging ? 0.6 : 1)};
+  box-shadow: ${({ theme, $dragging }) => ($dragging ? `0 6px 20px ${theme.shadow}` : 'none')};
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 `;
 
 const Handle = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
   background: none;
   border: none;
   cursor: grab;
   color: ${({ theme }) => theme.secondaryText};
-  font-size: 1.4rem;
-  padding: 0.15rem 0;
+  font-size: 1.5rem;
+  padding: ${({ theme }) => theme.space[1]} 0;
   touch-action: none;
+  transition: color 0.2s ease;
 
   &:active {
     cursor: grabbing;
   }
   &:hover {
     color: ${({ theme }) => theme.accent};
+  }
+
+  @media (pointer: coarse) {
+    min-width: 44px;
+    min-height: 44px;
   }
 `;
 
@@ -83,6 +95,7 @@ export default function SortableList<T extends { id: string }>({
   onReorder,
   renderItem,
 }: SortableListProps<T>) {
+  const contextId = useId();
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
   );
@@ -97,6 +110,7 @@ export default function SortableList<T extends { id: string }>({
 
   return (
     <DndContext
+      id={contextId}
       sensors={sensors}
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}

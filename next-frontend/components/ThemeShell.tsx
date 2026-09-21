@@ -29,6 +29,10 @@ const ThemeShell = ({ children }: { children: React.ReactNode }) => {
     const next = isDarkMode ? 'light' : 'dark';
     document.documentElement.dataset.theme = next;
     localStorage.setItem('theme', next);
+    // Keep browser chrome (status bar, address bar) on the page background
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', next === 'light' ? '#dad5d2' : '#1e1e1e');
     setIsDarkMode(!isDarkMode);
   };
 

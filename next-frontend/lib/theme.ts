@@ -9,6 +9,14 @@ export const cssVarTheme = {
     secondaryText: 'var(--secondary-text)',
     border: 'var(--border)',
     shadow: 'var(--shadow)',
+    danger: 'var(--danger)',
+    dangerText: 'var(--danger-text)',
+    radius: {
+        sm: 'var(--radius-sm)',
+        md: 'var(--radius-md)',
+        lg: 'var(--radius-lg)',
+        pill: 'var(--radius-pill)',
+    },
     // Type + spacing scales (defined in globals.css). Use these instead of
     // hardcoded px/rem so sizes stay consistent site-wide.
     fontSize: {

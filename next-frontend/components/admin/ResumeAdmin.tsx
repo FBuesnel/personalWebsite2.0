@@ -31,7 +31,7 @@ const ResumeAdmin = ({ currentUrl }: { currentUrl: string | null }) => {
         <ResumeLink href="/resume" target="_blank" rel="noopener noreferrer">
           /resume
         </ResumeLink>
-        {currentUrl ? ' (uploaded)' : ' (static fallback)'}
+        {currentUrl ? ' (uploaded)' : ' (included with the site)'}
       </CurrentLine>
       <AdminForm action={formAction}>
         <Label>

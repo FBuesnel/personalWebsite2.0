@@ -72,7 +72,7 @@ const PostClient = ({ post }: { post: PostViewData }) => {
           {post.showReadTime && ` · ${post.readMins} min read`}
         </MetaLine>
         <Title>{post.title}</Title>
-        {post.coverImage && <Cover src={post.coverImage} alt="" />}
+        {post.coverImage && <Cover src={post.coverImage} alt="" fetchPriority="high" />}
         <PostBody content={post.content} />
         <Divider />
         <BackLink href="/posts">← All posts</BackLink>

@@ -200,11 +200,11 @@ const ContactClient = () => {
           I&apos;m always happy to discuss my projects or experience, so feel free to reach out.
         </Description>
         <Form onSubmit={handleSubmit}>
-          <Input type="text" name="firstName" placeholder="First Name" required />
-          <Input type="text" name="lastName" placeholder="Last Name" required />
-          <Input type="email" name="email" placeholder="Email Address" required />
-          <Input type="text" name="subject" placeholder="Subject" required />
-          <TextArea name="message" placeholder="Message" rows={5} required />
+          <Input type="text" name="firstName" placeholder="First Name" aria-label="First Name" required />
+          <Input type="text" name="lastName" placeholder="Last Name" aria-label="Last Name" required />
+          <Input type="email" name="email" placeholder="Email Address" aria-label="Email Address" required />
+          <Input type="text" name="subject" placeholder="Subject" aria-label="Subject" required />
+          <TextArea name="message" placeholder="Message" aria-label="Message" rows={5} required />
           <SubmitButton type="submit" disabled={loading}>
            {loading ? <Spinner /> : 'Send Message'}
           </SubmitButton>

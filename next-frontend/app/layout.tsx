@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   authors: [{ name: "Fynn Buesnel" }],
+  alternates: {
+    types: { "application/rss+xml": "/feed.xml" },
+  },
   openGraph: {
     type: "website",
     siteName: "Fynn Buesnel",
@@ -30,6 +33,8 @@ export const metadata: Metadata = {
   },
 };
 
+// Matched to --background per theme; the init script and the navbar toggle
+// keep the meta tag in sync so browser chrome follows the active theme.
 export const viewport: Viewport = {
   themeColor: "#1e1e1e",
 };
@@ -53,7 +58,7 @@ const personJsonLd = {
 };
 
 // Runs before first paint so the stored theme applies with no flash.
-const themeInitScript = `(function(){try{var t=localStorage.getItem('theme');document.documentElement.dataset.theme=t==='light'?'light':'dark';}catch(e){document.documentElement.dataset.theme='dark';}})();`;
+const themeInitScript = `(function(){try{var t=localStorage.getItem('theme');var l=t==='light';document.documentElement.dataset.theme=l?'light':'dark';var s=function(){var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',l?'#dad5d2':'#1e1e1e');};s();document.addEventListener('DOMContentLoaded',s);}catch(e){document.documentElement.dataset.theme='dark';}})();`;
 
 export default function RootLayout({
   children,

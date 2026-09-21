@@ -9,7 +9,8 @@ import { savePost } from '../../app/admin/posts/actions';
 
 const TabsRow = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: ${({ theme }) => theme.space[4]};
+  margin-bottom: ${({ theme }) => theme.space[2]};
 `;
 
 const Tab = styled.button<{ $active: boolean }>`
@@ -29,9 +30,9 @@ const Tab = styled.button<{ $active: boolean }>`
 `;
 
 const PreviewPane = styled.div`
-  background: ${({ theme }) => theme.background};
+  background: ${({ theme }) => theme.secondaryBackground};
   border: 2px solid ${({ theme }) => theme.border};
-  border-radius: 6px;
+  border-radius: ${({ theme }) => theme.radius.lg};
   padding: ${({ theme }) => theme.space[5]};
   min-height: 320px;
   max-width: 720px;
@@ -43,7 +44,7 @@ export interface PostEditorData {
   title: string;
   quote: string;
   content: string;
-  kind: 'STORY' | 'POEM' | 'ESSAY';
+  kind: 'STORY' | 'POEM' | 'ESSAY' | 'REVIEW';
   publishedAtDate: string; // YYYY-MM-DD
   coverImage: string | null;
   published: boolean;
@@ -85,6 +86,7 @@ const PostEditor = ({ post }: { post?: PostEditorData }) => {
               <option value="ESSAY">Essay</option>
               <option value="STORY">Story</option>
               <option value="POEM">Poem</option>
+              <option value="REVIEW">Book review</option>
             </Select>
           </Label>
           <Label>
@@ -117,7 +119,7 @@ const PostEditor = ({ post }: { post?: PostEditorData }) => {
           </PreviewPane>
         )}
         <InlineRow>
-          <Label style={{ flexDirection: 'row', alignItems: 'center', gap: '0.4rem' }}>
+          <Label as="div" style={{ flexDirection: 'row', alignItems: 'center', gap: '0.5rem' }}>
             <input type="checkbox" name="published" defaultChecked={post?.published ?? true} /> Published
           </Label>
           <Button type="submit" disabled={pending}>

@@ -1,22 +1,19 @@
-# newPersonalWebsite
- This is my personal website in React with Typescript.
+# fynnbuesnel.me
 
-## Running Locally
-### Frontend
-Install the dependences and start the npm run build
-```
-cd react-frontend
-npm i
-npm run start
-```
+Personal website and private content editor, live at [fynnbuesnel.me](https://www.fynnbuesnel.me).
 
-### Backend
-Start the backend.
+Everything lives in [`next-frontend/`](next-frontend/) - a Next.js (App Router + TypeScript + styled-components) app backed by Neon Postgres via Prisma, deployed on Vercel. Site content (experience, portfolio, posts) is database-driven and edited through a private admin area, so publishing never requires a redeploy.
+
+See [`next-frontend/README.md`](next-frontend/README.md) for setup, environment variables, and architecture notes.
+
+## Running locally
+
 ```
-cd node-backend
-node server.js
+cd next-frontend
+npm install
+npm run dev
 ```
 
 ## Deploy
 
-This website uses vercel to deploy and manage builds. On every new commit, the website will redeploy automatically.
+Vercel builds from `next-frontend/` on every push; pending Prisma migrations are applied automatically during the build.

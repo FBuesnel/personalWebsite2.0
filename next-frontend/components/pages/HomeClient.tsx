@@ -129,7 +129,7 @@ const HomeClient = ({ recentPosts }: { recentPosts: RecentPost[] }) => {
         Software Engineer with a passion for Computer Science and Literature
       </StyledHeader>
       <Row>
-        <ProfileImage src="/images/profilePicture.jpg" alt="Me" />
+        <ProfileImage src="/images/profilePicture.jpg" alt="Fynn Buesnel" width={200} height={200} />
         <Description>
           Hey, I&apos;m Fynn Buesnel. I&apos;m a student at <b>Boston University</b> pursuing a BA in <b>Computer Science</b> and a BA in <b>Economics</b>, currently a Software Engineer Intern at <b>MirrorTab</b> helping build Haven, an AI-powered browser safety layer. I love fashion, volunteering, teaching, and mobile development with React Native. Check out my experiences and projects!
         </Description>

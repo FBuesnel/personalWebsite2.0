@@ -3,6 +3,7 @@
 import { put } from '@vercel/blob';
 import { prisma } from '../../../lib/db';
 import { requireAdmin } from '../../../lib/admin';
+import { RESUME_SETTING_KEY } from '../../../lib/resume';
 
 export async function uploadResume(
   prevState: string | undefined,
@@ -31,9 +32,9 @@ export async function uploadResume(
   });
 
   await prisma.siteSetting.upsert({
-    where: { key: 'resumeUrl' },
+    where: { key: RESUME_SETTING_KEY },
     update: { value: blob.url },
-    create: { key: 'resumeUrl', value: blob.url },
+    create: { key: RESUME_SETTING_KEY, value: blob.url },
   });
 
   return 'Resume updated! The footer link now serves the new file.';

@@ -1,10 +1,13 @@
 'use client';
 
-import { useEffect, useState, useTransition } from 'react';
+import { useEffect, useRef, useState, useTransition } from 'react';
 import styled from 'styled-components';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import SortableList from './SortableList';
-import { AdminForm, Input, TextArea, Select, Button, DangerButton, InlineRow, Label, Collapsible, SectionTitle } from './AdminStyles';
+import { AdminForm, Input, TextArea, Select, InlineRow, Label, Collapsible, SectionTitle, IconButton } from './AdminStyles';
+import SubmitButton from './SubmitButton';
+import DeleteButton from './DeleteButton';
+import { useSavedFlash, SavedNote } from './SavedFlash';
 import { saveExperience, deleteExperience, reorderExperience, toggleExperiencePublished } from '../../app/admin/experience/actions';
 
 export interface ExperienceAdminEntry {
@@ -35,31 +38,27 @@ const ItemSubtitle = styled.span<{ $hidden: boolean }>`
   opacity: ${({ $hidden }) => ($hidden ? 0.45 : 1)};
 `;
 
-const EyeButton = styled.button`
+const Eye = styled(IconButton)`
   margin-left: auto;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.15rem;
-  color: ${({ theme }) => theme.secondaryText};
-  transition: color 0.3s;
+`;
 
-  &:hover {
-    color: ${({ theme }) => theme.accent};
-  }
+const DeleteRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: ${({ theme }) => theme.space[3]};
 `;
 
 const EditDetails = styled.details`
-  margin-top: 0.35rem;
+  margin-top: ${({ theme }) => theme.space[2]};
 
   summary {
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: ${({ theme }) => theme.fontSize.sm};
     color: ${({ theme }) => theme.secondaryText};
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: ${({ theme }) => theme.space[2]};
 
     &::-webkit-details-marker {
       display: none;
@@ -82,7 +81,7 @@ const EditDetails = styled.details`
   }
 
   form {
-    margin-top: 0.75rem;
+    margin-top: ${({ theme }) => theme.space[3]};
   }
 `;
 
@@ -121,19 +120,30 @@ const EntryFields = ({ entry }: { entry?: ExperienceAdminEntry }) => (
           <option value="EDUCATION">Education</option>
         </Select>
       </Label>
-      <Label style={{ flexDirection: 'row', alignItems: 'center', gap: '0.4rem' }}>
+      <Label as="div" style={{ flexDirection: 'row', alignItems: 'center', gap: '0.5rem' }}>
         <input type="checkbox" name="published" defaultChecked={entry?.published ?? true} /> Published
       </Label>
     </InlineRow>
-    <Button type="submit">Save</Button>
+    <SubmitButton>Save</SubmitButton>
   </>
 );
 
 const ExperienceAdmin = ({ entries }: { entries: ExperienceAdminEntry[] }) => {
   const [items, setItems] = useState(entries);
   const [, startTransition] = useTransition();
+  const addFormRef = useRef<HTMLFormElement>(null);
+  const [addOpen, setAddOpen] = useState(false);
+  const [addSaved, flashAdd] = useSavedFlash();
 
   useEffect(() => setItems(entries), [entries]);
+
+  // Client action wrapper: save, then reset + collapse + flash on success
+  const addEntry = async (formData: FormData) => {
+    await saveExperience(formData);
+    addFormRef.current?.reset();
+    setAddOpen(false);
+    flashAdd();
+  };
 
   const sections: { key: 'EXPERIENCE' | 'EDUCATION'; title: string }[] = [
     { key: 'EXPERIENCE', title: 'Professional' },
@@ -154,9 +164,12 @@ const ExperienceAdmin = ({ entries }: { entries: ExperienceAdminEntry[] }) => {
 
   return (
     <>
-      <Collapsible>
-        <summary>Add new entry</summary>
-        <AdminForm action={saveExperience}>
+      <Collapsible open={addOpen} onToggle={e => setAddOpen((e.target as HTMLDetailsElement).open)}>
+        <summary>
+          Add new entry
+          {addSaved && <SavedNote style={{ marginLeft: '0.5rem' }}>Saved</SavedNote>}
+        </summary>
+        <AdminForm ref={addFormRef} action={addEntry}>
           <EntryFields />
         </AdminForm>
       </Collapsible>
@@ -170,29 +183,24 @@ const ExperienceAdmin = ({ entries }: { entries: ExperienceAdminEntry[] }) => {
               <>
                 <ItemHeader>
                   <ItemTitle $hidden={!entry.published}>{entry.title}</ItemTitle>
-                  <ItemSubtitle $hidden={!entry.published}>— {entry.subtitle}</ItemSubtitle>
-                  <EyeButton
+                  <ItemSubtitle $hidden={!entry.published}>- {entry.subtitle}</ItemSubtitle>
+                  <Eye
+                    type="button"
                     onClick={() => handleToggle(entry.id)}
+                    aria-label={entry.published ? 'Hide from site' : 'Show on site'}
                     title={entry.published ? 'Hide from site' : 'Show on site'}
                   >
                     {entry.published ? <FaRegEye /> : <FaRegEyeSlash />}
-                  </EyeButton>
+                  </Eye>
                 </ItemHeader>
                 <EditDetails>
                   <summary>Edit</summary>
                   <AdminForm action={saveExperience}>
                     <EntryFields entry={entry} />
                   </AdminForm>
-                  <form
-                    action={deleteExperience}
-                    onSubmit={e => {
-                      if (!confirm(`Delete "${entry.title}"?`)) e.preventDefault();
-                    }}
-                    style={{ marginTop: '0.75rem' }}
-                  >
-                    <input type="hidden" name="id" value={entry.id} />
-                    <DangerButton type="submit">Delete</DangerButton>
-                  </form>
+                  <DeleteRow>
+                    <DeleteButton action={deleteExperience} fields={{ id: entry.id }} push={false} prompt={`Delete "${entry.title}"?`} />
+                  </DeleteRow>
                 </EditDetails>
               </>
             )}

@@ -41,6 +41,11 @@ const ToolButton = styled.button`
   color: ${({ theme }) => theme.secondaryText};
   transition: color 0.3s, background-color 0.3s;
 
+  @media (pointer: coarse) {
+    min-height: 44px;
+    min-width: 40px;
+  }
+
   &:hover {
     color: ${({ theme }) => theme.accent};
     background: ${({ theme }) => theme.background};
@@ -111,50 +116,50 @@ const MarkdownToolbar = ({ textareaRef }: MarkdownToolbarProps) => {
 
   return (
     <Bar>
-      <ToolButton type="button" title="Bold" onClick={() => surround('**')}>
+      <ToolButton type="button" title="Bold" aria-label="Bold" onClick={() => surround('**')}>
         <FaBold />
       </ToolButton>
-      <ToolButton type="button" title="Italic" onClick={() => surround('*')}>
+      <ToolButton type="button" title="Italic" aria-label="Italic" onClick={() => surround('*')}>
         <FaItalic />
       </ToolButton>
-      <ToolButton type="button" title="Heading" onClick={() => prefixLines('## ')}>
+      <ToolButton type="button" title="Heading" aria-label="Heading" onClick={() => prefixLines('## ')}>
         <FaHeading />
       </ToolButton>
       <Gap />
-      <ToolButton type="button" title="Quote" onClick={() => prefixLines('> ')}>
+      <ToolButton type="button" title="Quote" aria-label="Quote" onClick={() => prefixLines('> ')}>
         <FaQuoteRight />
       </ToolButton>
-      <ToolButton type="button" title="List" onClick={() => prefixLines('- ')}>
+      <ToolButton type="button" title="List" aria-label="List" onClick={() => prefixLines('- ')}>
         <FaListUl />
       </ToolButton>
-      <ToolButton type="button" title="Indent" onClick={() => block('indent')}>
+      <ToolButton type="button" title="Indent" aria-label="Indent" onClick={() => block('indent')}>
         <FaIndent />
       </ToolButton>
       <Gap />
-      <ToolButton type="button" title="Center" onClick={() => block('center')}>
+      <ToolButton type="button" title="Center" aria-label="Center" onClick={() => block('center')}>
         <FaAlignCenter />
       </ToolButton>
-      <ToolButton type="button" title="Align right" onClick={() => block('right')}>
+      <ToolButton type="button" title="Align right" aria-label="Align right" onClick={() => block('right')}>
         <FaAlignRight />
       </ToolButton>
       <Gap />
       <ToolButton
         type="button"
-        title="Link"
+        title="Link" aria-label="Link"
         onClick={() => insert('[text](https://)', 1, 5)}
       >
         <FaLink />
       </ToolButton>
       <ToolButton
         type="button"
-        title="Image (alt text becomes the caption)"
+        title="Image (alt text becomes the caption)" aria-label="Image (alt text becomes the caption)"
         onClick={() => insert('![caption](https://)', 2, 9)}
       >
         <FaImage />
       </ToolButton>
       <ToolButton
         type="button"
-        title="Divider"
+        title="Divider" aria-label="Divider"
         onClick={() => insert('\n---\n', 1, 4)}
       >
         <FaMinus />

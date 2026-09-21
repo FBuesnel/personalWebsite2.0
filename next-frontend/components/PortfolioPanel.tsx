@@ -88,7 +88,7 @@ const PortfolioPanel: React.FC<PortfolioPanelProps> = ({
 }) => {
   return (
     <Panel>
-      {imgSrc && <Image alt={title} src={imgSrc} />}
+      {imgSrc && <Image alt={title} src={imgSrc} loading="lazy" decoding="async" />}
       <Title>{title}</Title>
       <Padding>
       <Description>{description}</Description>

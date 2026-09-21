@@ -186,7 +186,7 @@ const ExperienceClient = ({ experience, education }: ExperienceClientProps) => {
           const side = i % 2 === 0 ? 'left' : 'right';
           return (
             <TimelineItem key={entry.id} $side={side} $reveal={i >= VISIBLE_COUNT}>
-              <TimelineNode $side={side} src={entry.imageUrl} alt="" />
+              <TimelineNode $side={side} src={entry.imageUrl} alt="" loading="lazy" decoding="async" />
               <TimelineCard>
                 <CardTitle>{entry.title}</CardTitle>
                 {entry.companyUrl ? (

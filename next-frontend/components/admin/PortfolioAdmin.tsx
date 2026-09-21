@@ -1,10 +1,13 @@
 'use client';
 
-import { useEffect, useState, useTransition } from 'react';
+import { useEffect, useRef, useState, useTransition } from 'react';
 import styled from 'styled-components';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import SortableList from './SortableList';
-import { AdminForm, Input, TextArea, Button, DangerButton, InlineRow, Label, Collapsible } from './AdminStyles';
+import { AdminForm, Input, TextArea, InlineRow, Label, Collapsible, IconButton } from './AdminStyles';
+import SubmitButton from './SubmitButton';
+import DeleteButton from './DeleteButton';
+import { useSavedFlash, SavedNote } from './SavedFlash';
 import { savePortfolioProject, deletePortfolioProject, reorderPortfolio, togglePortfolioPublished } from '../../app/admin/portfolio/actions';
 
 export interface PortfolioAdminProject {
@@ -30,31 +33,31 @@ const ItemTitle = styled.span<{ $hidden: boolean }>`
   opacity: ${({ $hidden }) => ($hidden ? 0.45 : 1)};
 `;
 
-const EyeButton = styled.button`
+const Eye = styled(IconButton)`
   margin-left: auto;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.15rem;
-  color: ${({ theme }) => theme.secondaryText};
-  transition: color 0.3s;
+`;
 
-  &:hover {
-    color: ${({ theme }) => theme.accent};
-  }
+const ListWrap = styled.div`
+  margin-top: ${({ theme }) => theme.space[5]};
+`;
+
+const DeleteRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: ${({ theme }) => theme.space[3]};
 `;
 
 const EditDetails = styled.details`
-  margin-top: 0.35rem;
+  margin-top: ${({ theme }) => theme.space[2]};
 
   summary {
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: ${({ theme }) => theme.fontSize.sm};
     color: ${({ theme }) => theme.secondaryText};
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: ${({ theme }) => theme.space[2]};
 
     &::-webkit-details-marker {
       display: none;
@@ -77,7 +80,7 @@ const EditDetails = styled.details`
   }
 
   form {
-    margin-top: 0.75rem;
+    margin-top: ${({ theme }) => theme.space[3]};
   }
 `;
 
@@ -113,10 +116,10 @@ const ProjectFields = ({ project }: { project?: PortfolioAdminProject }) => (
       </Label>
     </InlineRow>
     <InlineRow>
-      <Label style={{ flexDirection: 'row', alignItems: 'center', gap: '0.4rem' }}>
+      <Label as="div" style={{ flexDirection: 'row', alignItems: 'center', gap: '0.5rem' }}>
         <input type="checkbox" name="published" defaultChecked={project?.published ?? true} /> Published
       </Label>
-      <Button type="submit">Save</Button>
+      <SubmitButton>Save</SubmitButton>
     </InlineRow>
   </>
 );
@@ -124,8 +127,19 @@ const ProjectFields = ({ project }: { project?: PortfolioAdminProject }) => (
 const PortfolioAdmin = ({ projects }: { projects: PortfolioAdminProject[] }) => {
   const [items, setItems] = useState(projects);
   const [, startTransition] = useTransition();
+  const addFormRef = useRef<HTMLFormElement>(null);
+  const [addOpen, setAddOpen] = useState(false);
+  const [addSaved, flashAdd] = useSavedFlash();
 
   useEffect(() => setItems(projects), [projects]);
+
+  // Client action wrapper: save, then reset + collapse + flash on success
+  const addProject = async (formData: FormData) => {
+    await savePortfolioProject(formData);
+    addFormRef.current?.reset();
+    setAddOpen(false);
+    flashAdd();
+  };
 
   const handleReorder = (next: PortfolioAdminProject[]) => {
     setItems(next);
@@ -141,13 +155,16 @@ const PortfolioAdmin = ({ projects }: { projects: PortfolioAdminProject[] }) => 
 
   return (
     <>
-      <Collapsible>
-        <summary>Add new project</summary>
-        <AdminForm action={savePortfolioProject}>
+      <Collapsible open={addOpen} onToggle={e => setAddOpen((e.target as HTMLDetailsElement).open)}>
+        <summary>
+          Add new project
+          {addSaved && <SavedNote style={{ marginLeft: '0.5rem' }}>Saved</SavedNote>}
+        </summary>
+        <AdminForm ref={addFormRef} action={addProject}>
           <ProjectFields />
         </AdminForm>
       </Collapsible>
-      <div style={{ marginTop: '1.5rem' }}>
+      <ListWrap>
         <SortableList
           items={items}
           onReorder={handleReorder}
@@ -155,33 +172,28 @@ const PortfolioAdmin = ({ projects }: { projects: PortfolioAdminProject[] }) => 
             <>
               <ItemHeader>
                 <ItemTitle $hidden={!project.published}>{project.title}</ItemTitle>
-                <EyeButton
+                <Eye
+                  type="button"
                   onClick={() => handleToggle(project.id)}
+                  aria-label={project.published ? 'Hide from site' : 'Show on site'}
                   title={project.published ? 'Hide from site' : 'Show on site'}
                 >
                   {project.published ? <FaRegEye /> : <FaRegEyeSlash />}
-                </EyeButton>
+                </Eye>
               </ItemHeader>
               <EditDetails>
                 <summary>Edit</summary>
                 <AdminForm action={savePortfolioProject}>
                   <ProjectFields project={project} />
                 </AdminForm>
-                <form
-                  action={deletePortfolioProject}
-                  onSubmit={e => {
-                    if (!confirm(`Delete "${project.title}"?`)) e.preventDefault();
-                  }}
-                  style={{ marginTop: '0.75rem' }}
-                >
-                  <input type="hidden" name="id" value={project.id} />
-                  <DangerButton type="submit">Delete</DangerButton>
-                </form>
+                <DeleteRow>
+                  <DeleteButton action={deletePortfolioProject} fields={{ id: project.id }} push={false} prompt={`Delete "${project.title}"?`} />
+                </DeleteRow>
               </EditDetails>
             </>
           )}
         />
-      </div>
+      </ListWrap>
     </>
   );
 };

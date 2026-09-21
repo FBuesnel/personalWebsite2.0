@@ -1,12 +1,12 @@
 # fynnbuesnel.me — Next.js app
 
-Next.js (App Router + TypeScript + styled-components) port of the personal website,
-now with a database-backed admin dashboard. Replaces both `react-frontend/` (CRA)
-and `node-backend/` (the Express mailer is now `app/api/send-email/route.ts`).
+Next.js (App Router + TypeScript + styled-components) personal website with a
+database-backed content editor. The contact-form mailer is
+`app/api/send-email/route.ts`.
 
 Content (experience, portfolio, posts) lives in Postgres (Neon) and is edited at
-`/admin` — no redeploys needed. The dashboard also has a daily habit tracker and
-resume upload (Vercel Blob).
+`/admin` — no redeploys needed. Signing in opens the experience editor; admin
+navigation also links directly to portfolio and posts. Resume uploads use Vercel Blob.
 
 ## Local development
 
@@ -27,7 +27,7 @@ AUTH_SECRET=...           # openssl rand -base64 32
 AUTH_GOOGLE_ID=...        # Google OAuth client (the only way to log in)
 AUTH_GOOGLE_SECRET=...
 ADMIN_EMAILS=...          # comma-separated Google accounts allowed into /admin
-BLOB_READ_WRITE_TOKEN=... # Vercel Blob store, used by resume upload
+BLOB_READ_WRITE_TOKEN=... # Vercel Blob store, used by resume + post image uploads
 ```
 
 ## Admin
@@ -36,9 +36,17 @@ BLOB_READ_WRITE_TOKEN=... # Vercel Blob store, used by resume upload
 - **Google-only sign-in:** requires `AUTH_GOOGLE_ID` + `AUTH_GOOGLE_SECRET` (Google Cloud Console → APIs & Services → Credentials → OAuth client ID, type "Web application"). Authorized redirect URIs: `https://www.fynnbuesnel.me/api/auth/callback/google` and `http://localhost:3018/api/auth/callback/google`. Only the Google accounts listed in `ADMIN_EMAILS` (comma-separated) are allowed through; every other account is rejected. There is no password login.
 - Route protection in `proxy.ts`; every server action also calls `requireAdmin()`.
 - Editing experience/portfolio/posts calls `revalidatePath`, so public pages update instantly while staying statically cached.
-- Habit dates are `YYYY-MM-DD` keys in `America/Los_Angeles` (`lib/dates.ts`) so Vercel's UTC runtime never shifts the day.
+- `/admin` and successful sign-in both lead to `/admin/experience`. Login failures show a message on `/login`; existing sessions skip the login form.
+- Experience, education, portfolio, posts (including book reviews), and resume uploads are independent of the retired trackers.
+- `/resume` uses `public/Resume.pdf` unless a newer admin upload exists for the version in `lib/resume.ts`. When replacing the bundled PDF, bump `RESUME_VERSION` so an older upload cannot override it.
 
 ## Database
+
+The personal tracker routes, actions, components, sync/export endpoints, and
+seeding script have been removed. The legacy Prisma models and existing
+migrations remain to preserve stored data and migration history; no active
+application code queries those tables. This cleanup does not add a data-deletion
+migration. Book reviews are regular posts and no longer require a tracked book.
 
 ```bash
 npx prisma migrate dev    # apply schema changes (dev)
@@ -51,18 +59,15 @@ so Vercel applies pending migrations automatically on deploy.
 
 ## Structure
 
-- `app/` — routes; each `page.tsx` exports metadata and renders a client component from `components/pages/`
+- `app/` — routes; each `page.tsx` exports metadata and renders a client component from `components/pages/` (public) or `components/admin/` (dashboard)
 - `components/` — styled-components UI (theme shell, navbar, footer, panels)
-- `lib/` — theme, posts registry (`posts-data.ts` = slugs/titles/quotes, `posts.ts` = server-side markdown reader), styled-components SSR registry
-- `content/posts/` — markdown post files
-- `images/` — statically imported images
+- `lib/` — theme, db/auth helpers, date and stats utilities, styled-components SSR registry
+- `prisma/` — schema, migrations, seed scripts
+- Post content is markdown stored in the database, rendered by `components/PostBody.tsx`
 - SEO is handled by the Metadata API: per-page titles/descriptions, `app/sitemap.ts`, `app/robots.ts`, `app/manifest.ts`, JSON-LD in `app/layout.tsx`
 
-## Vercel cutover (one-time)
+## Deploy
 
-1. Push this folder to the repo.
-2. In the Vercel project settings: **Root Directory** → change `react-frontend` to `next-frontend` (framework preset auto-detects Next.js).
-3. Add env vars to the Vercel project: `EMAIL_USER`, `EMAIL_PASS`, `RECEIVER_EMAIL`, `AUTH_SECRET`, `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`, `ADMIN_EMAILS`. `DATABASE_URL` is already set.
-4. Storage tab → create a **Blob** store and connect it (adds `BLOB_READ_WRITE_TOKEN`); pull it locally with `vercel env pull` or paste into `.env.local`.
-5. Redeploy. The domain stays the same.
-6. Afterwards: the separate node-backend Vercel project can be deleted, and `react-frontend/` + `node-backend/` can be removed from the repo whenever you're comfortable.
+Vercel builds this folder (project Root Directory is `next-frontend`); the build
+script runs pending Prisma migrations, and env-var changes need a manual Redeploy
+to take effect.

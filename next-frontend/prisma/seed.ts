@@ -189,7 +189,7 @@ const portfolio = [
     githubUrl: 'https://github.com/FBuesnel/SaintFrancisBookClub',
   },
   {
-    imageUrl: '/images/portfolio/personalWebsite2.png',
+    imageUrl: '/images/portfolio/personalWebsite2.jpg',
     title: 'Personal Website 2.0',
     subtitle: 'Personal Website 2.0',
     description:
@@ -206,7 +206,7 @@ const portfolio = [
     githubUrl: 'https://github.com/FBuesnel/3D-Graphing-Experiments',
   },
   {
-    imageUrl: '/images/portfolio/personalWebsite1.png',
+    imageUrl: '/images/portfolio/personalWebsite1.jpg',
     title: 'Personal Website 1.0',
     subtitle: 'Personal Website 1.0',
     description:

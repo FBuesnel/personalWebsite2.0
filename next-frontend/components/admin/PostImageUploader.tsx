@@ -1,8 +1,16 @@
 'use client';
 
 import { useActionState } from 'react';
+import styled from 'styled-components';
 import { AdminCard, AdminForm, Input, Button, Label, Notice, InlineRow } from './AdminStyles';
 import { uploadPostImage } from '../../app/admin/posts/actions';
+
+const Outputs = styled.div`
+  margin-top: ${({ theme }) => theme.space[3]};
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.space[2]};
+`;
 
 // Uploads a photo to Blob storage and hands back ready-to-paste markdown.
 // The alt text renders as a caption under the image on the post page.
@@ -15,7 +23,7 @@ const PostImageUploader = () => {
       <AdminForm action={formAction}>
         <InlineRow>
           <Label>
-            Upload an image (for the content or as cover)
+            Image upload
             <Input type="file" name="file" accept="image/*" required />
           </Label>
           <Button type="submit" disabled={pending}>
@@ -25,16 +33,16 @@ const PostImageUploader = () => {
       </AdminForm>
       {result && !isUrl && <Notice>{result}</Notice>}
       {isUrl && (
-        <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <Outputs>
           <Label>
-            Paste into content (alt text becomes the caption)
+            Content markdown (alt text becomes the caption)
             <Input readOnly value={`![caption](${result})`} onFocus={e => e.currentTarget.select()} />
           </Label>
           <Label>
-            Or use as cover image URL
+            Cover URL
             <Input readOnly value={result} onFocus={e => e.currentTarget.select()} />
           </Label>
-        </div>
+        </Outputs>
       )}
     </AdminCard>
   );
