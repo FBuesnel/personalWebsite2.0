@@ -48,6 +48,17 @@ const Description = styled.p`
   }
 `;
 
+const DescriptionLink = styled.a`
+  font-weight: 700;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
+`;
+
 const StyledContainer = styled(Container)`
   min-height: 80vh;
   padding-right: 30%;
@@ -92,6 +103,12 @@ const PostLink = styled(Link)`
   &:hover {
     color: ${({ theme }) => theme.accent};
   }
+
+  @media (max-width: 768px) {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
 `;
 
 const PostQuote = styled.blockquote`
@@ -131,7 +148,7 @@ const HomeClient = ({ recentPosts }: { recentPosts: RecentPost[] }) => {
       <Row>
         <ProfileImage src="/images/profilePicture.jpg" alt="Fynn Buesnel" width={200} height={200} />
         <Description>
-          Hey, I&apos;m Fynn Buesnel. I&apos;m a student at <b>Boston University</b> pursuing a BA in <b>Computer Science</b> and a BA in <b>Economics</b>, currently a Software Engineer Intern at <b>MirrorTab</b> helping build Haven, an AI-powered browser safety layer. I love fashion, volunteering, teaching, and mobile development with React Native. Check out my experiences and projects!
+          Hey, I&apos;m Fynn Buesnel. I&apos;m a senior at Boston University pursuing a dual degree in Computer Science and Economics, graduating in May 2027. I work part-time as a software engineer at MirrorTab on <DescriptionLink href='https://www.starthaven.com/' target='_blank' rel='noopener noreferrer'>Haven</DescriptionLink>, a browser-security product, and I&apos;m a teaching assistant for <DescriptionLink href='https://cs-351.github.io/fa26/' target='_blank' rel='noopener noreferrer'>CS351: Distributed Systems</DescriptionLink>, taught in Go. I enjoy backend systems, literature, fashion, and volunteering. I&apos;m looking for full-time software engineering opportunities after graduation, particularly in backend systems and infrastructure.
         </Description>
       </Row>
       {recentPosts.length > 0 && (

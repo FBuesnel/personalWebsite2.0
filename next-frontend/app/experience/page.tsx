@@ -5,7 +5,7 @@ import ExperienceClient from "../../components/pages/ExperienceClient";
 export const metadata: Metadata = {
   title: "Experience",
   description:
-    "Software engineering roles at MirrorTab, The Nudge, and Beehive AI, plus teaching and leadership at Boston University.",
+    "Software engineering at MirrorTab, The Nudge, ChitChat, and Beehive AI, plus teaching Distributed Systems at Boston University and studying abroad in Rome.",
 };
 
 // Static with on-demand revalidation: admin writes call revalidatePath.

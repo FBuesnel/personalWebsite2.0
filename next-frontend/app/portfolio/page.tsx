@@ -5,7 +5,7 @@ import PortfolioClient from "../../components/pages/PortfolioClient";
 export const metadata: Metadata = {
   title: "Portfolio",
   description:
-    "Projects by Fynn Buesnel, including LUMINA, a production wellness booking platform, and DormDash, a cross-platform delivery app.",
+    "Projects by Fynn Buesnel, including LUMINA, a production wellness booking platform, DormDash, a cross-platform delivery app, and The Veritas, built at HackHarvard 2025.",
 };
 
 export const revalidate = 3600;
